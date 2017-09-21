@@ -10,7 +10,9 @@ const AppBarFacts = () => (
     title={"Real Mike Facts"}
     style={{position: 'fixed', top: 0, left: 0}}
     showMenuIconButton={false}
-  />
+  >
+  logout goes here
+  </AppBar>
 );
 
 export default AppBarFacts;

@@ -22,7 +22,7 @@ export default class AuthService {
                 password,
             })
         }).then(res => {
-            this.setToken(res.token) // Setting the token in localStorage
+            this.setToken(res.token, username) // Setting the token in localStorage
             return Promise.resolve(res);
         })
     }
@@ -30,13 +30,14 @@ export default class AuthService {
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage
-        return !!token && !this.isTokenExpired(token) // handwaiving here
+        return !!token && !this.isTokenExpired(token) // Logically ANDing the two things 
+                                                      //needed to find out if the tok is cool.
     }
 
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. N
+            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. 
                 return true;
             }
             else
@@ -47,9 +48,10 @@ export default class AuthService {
         }
     }
 
-    setToken(idToken) {
+    setToken(idToken, idUsername) {
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
+        localStorage.setItem('id_username', idUsername)
     }
 
     getToken() {

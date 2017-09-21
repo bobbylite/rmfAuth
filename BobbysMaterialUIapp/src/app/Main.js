@@ -68,10 +68,12 @@ class Main extends Component {
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleTouchTap2 = this.handleTouchTap2.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-    
+
+
     this.state = {
       open2: false,
       tweetValue: '',
+      un: localStorage.id_username
     };
   }
 
@@ -120,8 +122,8 @@ class Main extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        first: 'Hello username',
-        second: 'Hello password',
+        Username: this.state.un, // This is a test to retrieve POST
+        tweet: this.state.tweetValue, // This is a test to retrieve POST
       })
     })
   }
@@ -151,8 +153,8 @@ class Main extends Component {
           >
           <p>@RealMikeFacts   {this.state.tweetValue} #realmikefacts</p>
           </Dialog>
-          <h1 style={styles.container}> #RealMikeFacts</h1>
-          <h3>Send a Mike Fact!</h3>
+          <h1 style={styles.container}> #realMikeFacts</h1>
+          <h3>Welcome back, {this.state.un}!</h3>
           <TextField
             hintText="Fact About Mike"
             value={this.state.tweetValue}

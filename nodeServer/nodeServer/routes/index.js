@@ -8,7 +8,9 @@ const exjwt = require('express-jwt');
 var tweetMessage = 'Mike Fact #';
 var fullTweet = '';
 var hashTag = ' #realMikeFacts';
-var counter = 182;
+var counter = 185;
+
+var LOGIN_STATUS = false;
 
 router.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -55,45 +57,94 @@ const jwtMW = exjwt({
     secret: 'keyboard cat 4 ever'
 });
 
-
-// MOCKING DB just for test
+// Users go here temp.  This will migrate to a user database later on.
 let users = [
     {
         id: 1,
-        username: 'mike',
-        password: 'robiscool'
+        username: 'Mike',
+        password: 'theogmike'
     },
     {
         id: 2,
-        username: 'test',
-        password: 'asdf123'
+        username: 'RJHURLEY',
+        password: 'supermike360'
+    }, 
+    {
+        id: 3,
+        username: 'Jb',
+        password: 'welcome'
+    },
+    {
+        id: 4,
+        username: 'Bobby',
+        password: 'ilovemike'
+    }, 
+    {
+        id: 5,
+        username: 'brit',
+        password: 'welcome'
+    },
+    {
+        id: 6,
+        username: 'Nick',
+        password: 'helloworld'
+    }, 
+    {
+        id: 7, 
+        username: 'Julia',
+        password: 'facts4julia'
+    },
+    {
+        id: 8,
+        username: 'John',
+        password: 'facts4weed'
+    },
+    {
+        id: 9, 
+        username: 'Woody',
+        password: 'howsthehouse'
+    }, 
+    {
+        id: 10, 
+        username: 'Steve',
+        password: 'dolfans'
     }
 ];
 // LOGIN ROUTE
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
+     let token = null;
+    //test console logging (DELTE ME LATER)
     console.log('Username: ', username);
     console.log('Password: ', password);
-    // Use your DB ORM logic here to find user and compare password
-    for (let user of users) { // I am using a simple array users which i made above
+    // check some stuff
+    for (let user of users) { // bunch of users to check out... 
         console.log('testing some stuff', user.username, user.password);
         if (username == user.username && password == user.password /* Use your password hash checking logic here !*/) {
-            //If all credentials are correct do this
-            let token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
+            //If creds are dope and correct, do this code. 
+            token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
+            LOGIN_STATUS = true;
+            break;
+        }
+
+        else {
+            LOGIN_STATUS = false;
+        }
+    } // end of for loop
+
+    if (LOGIN_STATUS == true){
             res.json({
                 sucess: true,
                 err: null,
                 token
             });
-            break;
-        }
-        else {
+    }
+    else if(LOGIN_STATUS == false){
             res.json({
                 sucess: false,
                 token: null,
                 err: 'Username or password is incorrect'
             });
-        }
     }
 });
 
@@ -101,14 +152,14 @@ router.get('/', jwtMW /* Using the express jwt MW here */, (req, res) => {
     res.send('You are authenticated'); //Sending some response when authenticated
 });
 
-// Error handling 
-//router.use(function (err, req, res, next) {
-    //if (err.name === 'UnauthorizedError') { // Send the error rather than to show it on the console
-        //res.status(401).send(err);
-    //}
-    //else {
-        //next(err);
-    //}
-//});
+//Error handling 
+router.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') { // Send the error rather than to show it on the console
+        res.status(401).send(err);
+    }
+    else {
+        next(err);
+    }
+});
 
 module.exports = router;
