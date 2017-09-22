@@ -5,6 +5,7 @@ var router = express.Router();
 var TwitterPackage = require('twitter');
 const jwt = require('jsonwebtoken');
 const exjwt = require('express-jwt');
+var today = new Date();
 var tweetMessage = 'Mike Fact #';
 var fullTweet = '';
 var hashTag = ' #realMikeFacts';
@@ -108,18 +109,24 @@ let users = [
         id: 10, 
         username: 'Steve',
         password: 'dolfans'
+    }, 
+    {
+        id: 11, 
+        username: 'Mikesfriendcapt',
+        password: '4Lokolemons'
+    },
+    {
+        id: 12, 
+        username: 'welcome',
+        password: 'welcome'
     }
 ];
 // LOGIN ROUTE
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
      let token = null;
-    //test console logging (DELTE ME LATER)
-    console.log('Username: ', username);
-    console.log('Password: ', password);
-    // check some stuff
+
     for (let user of users) { // bunch of users to check out... 
-        console.log('testing some stuff', user.username, user.password);
         if (username == user.username && password == user.password /* Use your password hash checking logic here !*/) {
             //If creds are dope and correct, do this code. 
             token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
@@ -133,6 +140,9 @@ router.post('/login', (req, res) => {
     } // end of for loop
 
     if (LOGIN_STATUS == true){
+            console.log('User: ', username, '\nLogged in on: ', today.getMonth(), "/",
+                                                        today.getDate(),"at",today.getHours(),":",today.getMinutes() );
+
             res.json({
                 sucess: true,
                 err: null,
@@ -160,6 +170,23 @@ router.use(function (err, req, res, next) {
     else {
         next(err);
     }
+});
+
+// Image replies
+router.get('/imgLogo', function(req, res){
+    res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-Text.png');
+});
+
+router.get('/imgMike', function(req, res){
+    res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-1.png');
+});
+
+router.get('/imgMikeHash', function(req, res){
+    res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-3.png');
+});
+
+router.get('/imgBanner', function(req, res){
+    res.sendFile(__dirname + '/img/Real-Mike-Facts-Cover.png');
 });
 
 module.exports = router;

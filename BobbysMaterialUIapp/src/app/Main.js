@@ -13,11 +13,14 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import IconButton from 'material-ui/IconButton';
 import Share from 'material-ui/svg-icons/social/mood';
+import Logout from 'material-ui/svg-icons/action/power-settings-new';
+import Home from 'material-ui/svg-icons/action/home';
 import TextField from 'material-ui/TextField';
 import AppBarFacts from './appBar';
 import Foot from './Foot';
 import AuthService from './AuthService';
 import withAuth from './withAuth';
+import Img from 'react-image';
 
 const Auth = new AuthService();
 
@@ -25,12 +28,20 @@ const styleAction = {
     margin: 0,
     top: 'auto',
     right: 20,
-    bottom: 50,
+    bottom: 60,
     left: 'auto',
     position: 'fixed',
 };
 
 const styles = {
+  home: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 50,
+    left: 'auto',
+    position: 'fixed',
+  },
   bottom: {
     margin: 0,
     bottom: 1,
@@ -43,7 +54,7 @@ const styles = {
   },
   container: {
     textAlign: 'center',
-    paddingTop: 200,
+    paddingTop: 10,
   },
   center: {
     textAlign: 'center',
@@ -53,6 +64,42 @@ const styles = {
     bottom: -50, 
     textAlign: 'center',
   },
+  homeButton: {
+    margin: 0,
+    top: 'auto',
+    left: 0,
+    bottom: 0,
+    position: 'fixed',
+  },
+  homeIcon: {
+    margin: 0,
+    top: 'auto',
+    left: 30,
+    bottom: 8,
+    color: '#e74c3c',
+    position: 'fixed',
+  },
+  logoutButton: {
+    margin: 0,
+    top: 'auto',
+    right: 0,
+    bottom: 0,
+    position: 'fixed',
+  },
+  logoutIcon: {
+    margin: 0,
+    top: 'auto',
+    right: 30,
+    bottom: 8,
+    color: '#e74c3c',
+    position: 'fixed',
+  }, 
+  LogoStyle: {
+    margin: 0,
+    height: 150,
+    position: 'center',
+    paddingTop: 80,
+  }
 };
 
 const muiTheme = getMuiTheme({
@@ -145,6 +192,7 @@ class Main extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.center} >
           <AppBarFacts style={styles.top}/>
+
           <Dialog
             open={this.state.open2}
             title="Almost there..."
@@ -153,6 +201,7 @@ class Main extends Component {
           >
           <p>@RealMikeFacts   {this.state.tweetValue} #realmikefacts</p>
           </Dialog>
+          <Img style={styles.LogoStyle} src="http://realmikefacts.com:8080/imgLogo" />
           <h1 style={styles.container}> #realMikeFacts</h1>
           <h3>Welcome back, {this.state.un}!</h3>
           <TextField
@@ -160,14 +209,19 @@ class Main extends Component {
             value={this.state.tweetValue}
             onChange={this.handleTextFieldChange}
             multiLine={true}
-          /><br/>
-          <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
-          <AppBarFacts style={styles.styleAction}/>
+          />
           <FloatingActionButton style={styleAction}
             onTouchTap={this.handleTouchTap2}
-          >
-          <Share />
+          >          
+          <Img style={styles.imgStyle} src="http://realmikefacts.com:8080/imgMike" />
           </FloatingActionButton>
+          <FlatButton style={styles.homeButton}>
+            <Home style={styles.homeIcon}/>
+          </FlatButton>
+            
+          <FlatButton style={styles.logoutButton} onClick={this.handleLogout.bind(this)}>
+            <Logout style={styles.logoutIcon}/>
+          </FlatButton>
           <Foot />
         </div>
       </MuiThemeProvider>

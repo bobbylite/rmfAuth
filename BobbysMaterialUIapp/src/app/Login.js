@@ -14,21 +14,29 @@ import Share from 'material-ui/svg-icons/social/mood';
 import TextField from 'material-ui/TextField';
 import AppBarFacts from './appBar';
 import Foot from './Foot';
+import Img from 'react-image';
 
 const style = {
     margin: 12,
     center: {
         textAlign: 'center',
-        paddingTop: '30%',
+        paddingTop: '15%',
     },
     title: {
         textAlign: 'center',
+        margin: 0,
     },
     top: {
         textAlign: 'center',
         paddingTop: 0,
         marginTop: 0,
     },
+    LogoStyle: {
+        margin: 0,
+        height: 200,
+        position: 'center',
+        paddingTop: -50,        
+    }
 };
 
 const muiTheme = getMuiTheme({
@@ -55,6 +63,7 @@ class Login extends React.Component{
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={style.center} >
                     <AppBarFacts style={style.top}/>
+                    <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgMikeHash" />
                     <h1 style={style.title}>Login to #realMikeFacts</h1>
                     <form onSubmit={this.handleFormSubmit}>
                         
