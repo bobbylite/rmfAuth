@@ -45,6 +45,8 @@ const muiTheme = getMuiTheme({
   },
 });
 
+
+
 class Login extends React.Component{
     constructor(){
         super()
@@ -55,6 +57,11 @@ class Login extends React.Component{
         this.state = {
             username: '',
             password: '',
+            formErrors: {email: '', password: ''},
+            emailValid: false,
+            passwordValid: false,
+            formValid: false
+  
         };
     }
 
@@ -85,7 +92,8 @@ class Login extends React.Component{
                         <RaisedButton 
                             style={style.button}
                             type="submit" 
-                            label="Login" 
+                            label="Login"
+                            disabled={!this.state.formValid}
                             secondary={true} 
                             style={style} 
                         />
@@ -96,15 +104,51 @@ class Login extends React.Component{
         )
 
     }
+    validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+
+    switch(fieldName) {
+        case 'username':
+        // create custom regex string. 
+        emailValid = value.match(/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/i);
+        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        break;
+        case 'password':
+        passwordValid = value.length >= 3;
+        fieldValidationErrors.password = passwordValid ? '': ' is too short';
+        break;
+        default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    emailValid: emailValid,
+                    passwordValid: passwordValid
+                    }, this.validateForm);
+                    
+    }
+
+    validateForm() {
+    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    }
+
+
+
     handleUserNameChange = (e) => {
+        const name = 'username';
+        const value = e.target.value;
         this.setState({
-        username: e.target.value,
-        });
+            [name]: value}, 
+                        () => { this.validateField(name, value) });
+
     }
     handlePasswordChange = (e) => {
+        const name = 'password';
+        const value = e.target.value;
         this.setState({
-        password: e.target.value,
-        });
+            [name]: value}, 
+                        () => { this.validateField(name, value) });
     }
     handleChange(e){
         this.setState({
