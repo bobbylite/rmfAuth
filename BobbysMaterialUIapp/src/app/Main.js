@@ -143,15 +143,6 @@ class Main extends Component {
     this.setState({
       open2: true,
     });
-    // Twitter API data goes here! 
-    // Must build seperate NodeJS server that /GET a /POST with JSON data string in it. 
-    // see config.js for Twitter App key and secrets.
-
-
-    // Also add Login page that does a "swipe from right" like you're clicking on a menu except ALL the way 
-    // makes it apear like a new page was loaded in and THAT is this main page.  All done through setSTATE.
-
-    // AND setSTATE on when you hit "Close" after the tweet is sent that clears the textField
   }
 
     handleLogout = () => {

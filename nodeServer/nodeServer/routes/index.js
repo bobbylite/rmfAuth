@@ -9,7 +9,7 @@ var today = new Date();
 var tweetMessage = 'Mike Fact #';
 var fullTweet = '';
 var hashTag = ' #realMikeFacts';
-var counter = 185;
+var counter = 191;
 
 var LOGIN_STATUS = false;
 
@@ -119,7 +119,7 @@ let users = [
         id: 12, 
         username: 'welcome',
         password: 'welcome'
-    }
+    }, 
 ];
 // LOGIN ROUTE
 router.post('/login', (req, res) => {

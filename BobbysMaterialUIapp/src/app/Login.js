@@ -116,7 +116,7 @@ class Login extends React.Component{
         fieldValidationErrors.email = emailValid ? '' : ' is invalid';
         break;
         case 'password':
-        passwordValid = value.length >= 3;
+        passwordValid = value.length >= 6; 
         fieldValidationErrors.password = passwordValid ? '': ' is too short';
         break;
         default:
@@ -132,8 +132,6 @@ class Login extends React.Component{
     validateForm() {
     this.setState({formValid: this.state.emailValid && this.state.passwordValid});
     }
-
-
 
     handleUserNameChange = (e) => {
         const name = 'username';
