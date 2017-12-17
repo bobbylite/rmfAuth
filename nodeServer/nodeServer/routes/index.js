@@ -5,11 +5,13 @@ var router = express.Router();
 var TwitterPackage = require('twitter');
 const jwt = require('jsonwebtoken');
 const exjwt = require('express-jwt');
+const DataEngine = require('node-dataengine-client').DataEngine;
 var today = new Date();
 var tweetMessage = 'Mike Fact #';
 var fullTweet = '';
 var hashTag = ' #realMikeFacts';
-var counter = 191;
+const fs = require('fs');
+
 
 var LOGIN_STATUS = false;
 
@@ -23,6 +25,14 @@ router.use((req, res, next) => {
 router.use(bodyParser.urlencoded({ extended: true}));
 router.use(bodyParser.json());
 
+var deOptions = {
+    host: '127.0.0.1',
+    port: 4300,
+    bucket: 'myBucket',
+};
+const de = new DataEngine(deOptions);
+var counter = 0;
+
 // Twitter API setup
 var secret = {
     consumer_key: 'hYTWcNYoR2PW9LZszZ4SMRg61',
@@ -35,25 +45,48 @@ var Twitter = new TwitterPackage(secret);
 /* GET home page. */
 
 router.post('/Message/:React_Message', function(req, res, next) {
-    console.log(req.body);
+    readDataEngine(req.params.React_Message);
+    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST
+    console.log(req.params.React_Message);
     // Build the full tweet from REST API 
-    fullTweet = tweetMessage + counter.toString() + ': ' + req.params.React_Message + hashTag;
-    console.log('got it! ');
-    // Actually POST to twitter REST web API
-    Twitter.post('statuses/update', { status: fullTweet }, function(error, tweet, response) {
-        if (error) {
-            console.log(error);
-        }
-        //console.log(tweet); // Tweet body.
-        //console.log(response); // Raw response object.
-    });
-
-    //Return something scuessfully
+   //fullTweet = tweetMessage + counter.toString() + ': ' + req.params.React_Message + hashTag;
+    //console.log(fullTweet);
     res.send(req.params);
-
-    //Tweet counter
-    counter++;
 });
+
+de.connection.addListener('myBucket', 'factCount', true, (event) => {
+    // Use onConnet here to send Commands
+    counter = event.value;
+    console.log('fact count: ', counter.factCount);
+});
+
+function writeDataEngine(data){
+    de.write('factCount', { factCount: data })
+        .then(() => console.log('Written!'));
+}
+
+function readDataEngine(msg){
+    var returnParam;
+    de.read('factCount')
+        .then(function(value){
+            returnParam = value.factCount;
+            console.log("Read: " + returnParam);
+            fullTweet = tweetMessage + returnParam + ': ' + msg + hashTag;
+            console.log("Tweet!!! : " + fullTweet);
+            Twitter.post('statuses/update', { status: fullTweet }, function(error, tweet, response) {
+                if (error) {
+                    console.log(error);
+                }
+                //console.log(tweet); // Tweet body.
+                //console.log(response); // Raw response object.
+            });
+            
+            writeDataEngine(++returnParam);
+        });
+    counter = returnParam;
+    //console.log("Return Param: " + returnParam)
+}
+
 const jwtMW = exjwt({
     secret: 'keyboard cat 4 ever'
 });
@@ -119,7 +152,18 @@ let users = [
         id: 12, 
         username: 'welcome',
         password: 'welcome'
+    },
+    {
+        id: 13, 
+        username: 'Jujujus2',
+        password: 'facts4justin'
     }, 
+    {
+        id: 14,
+        username: 'JorgyPorgy',
+        password: 'welovefacts'
+    }
+
 ];
 // LOGIN ROUTE
 router.post('/login', (req, res) => {
@@ -188,5 +232,7 @@ router.get('/imgMikeHash', function(req, res){
 router.get('/imgBanner', function(req, res){
     res.sendFile(__dirname + '/img/Real-Mike-Facts-Cover.png');
 });
+
+
 
 module.exports = router;

@@ -1,50 +1,22 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
 1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'run',
-1 verbose cli   'build',
-1 verbose cli   'C:\\Users\\bobby\\Documents\\Dev\\BobbysMaterialUIapp' ]
+1 verbose cli   'start' ]
 2 info using npm@3.10.10
 3 info using node@v6.11.1
-4 verbose run-script [ 'prebuild', 'build', 'postbuild' ]
-5 info lifecycle material-ui-example-webpack@0.16.4~prebuild: material-ui-example-webpack@0.16.4
-6 silly lifecycle material-ui-example-webpack@0.16.4~prebuild: no script for prebuild, continuing
-7 info lifecycle material-ui-example-webpack@0.16.4~build: material-ui-example-webpack@0.16.4
-8 verbose lifecycle material-ui-example-webpack@0.16.4~build: unsafe-perm in lifecycle true
-9 verbose lifecycle material-ui-example-webpack@0.16.4~build: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\bobby\Documents\Production\node_modules\.bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\bobby\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\bobby\AppData\Roaming\npm
-10 verbose lifecycle material-ui-example-webpack@0.16.4~build: CWD: C:\Users\bobby\Documents\Production
-11 silly lifecycle material-ui-example-webpack@0.16.4~build: Args: [ '/d /s /c',
-11 silly lifecycle   'webpack --config webpack-production.config.js --progress --colors "C:\\Users\\bobby\\Documents\\Dev\\BobbysMaterialUIapp"' ]
-12 silly lifecycle material-ui-example-webpack@0.16.4~build: Returned: code: 1  signal: null
-13 info lifecycle material-ui-example-webpack@0.16.4~build: Failed to exec build script
-14 verbose stack Error: material-ui-example-webpack@0.16.4 build: `webpack --config webpack-production.config.js --progress --colors "C:\Users\bobby\Documents\Dev\BobbysMaterialUIapp"`
-14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:891:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-15 verbose pkgid material-ui-example-webpack@0.16.4
-16 verbose cwd C:\Users\bobby\Documents\Production
-17 error Windows_NT 10.0.15063
-18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "build" "C:\\Users\\bobby\\Documents\\Dev\\BobbysMaterialUIapp"
-19 error node v6.11.1
-20 error npm  v3.10.10
-21 error code ELIFECYCLE
-22 error material-ui-example-webpack@0.16.4 build: `webpack --config webpack-production.config.js --progress --colors "C:\Users\bobby\Documents\Dev\BobbysMaterialUIapp"`
-22 error Exit status 1
-23 error Failed at the material-ui-example-webpack@0.16.4 build script 'webpack --config webpack-production.config.js --progress --colors "C:\Users\bobby\Documents\Dev\BobbysMaterialUIapp"'.
-23 error Make sure you have the latest version of node.js and npm installed.
-23 error If you do, this is most likely a problem with the material-ui-example-webpack package,
-23 error not with npm itself.
-23 error Tell the author that this fails on your system:
-23 error     webpack --config webpack-production.config.js --progress --colors "C:\Users\bobby\Documents\Dev\BobbysMaterialUIapp"
-23 error You can get information on how to open an issue for this project with:
-23 error     npm bugs material-ui-example-webpack
-23 error Or if that isn't available, you can get their info via:
-23 error     npm owner ls material-ui-example-webpack
-23 error There is likely additional logging output above.
-24 verbose exit [ 1, true ]
+4 verbose stack Error: ENOENT: no such file or directory, open 'C:\Users\bobby\Documents\Dev\realMikeFacts\realMikeFacts_AuthenticationMethod\package.json'
+4 verbose stack     at Error (native)
+5 verbose cwd C:\Users\bobby\Documents\Dev\realMikeFacts\realMikeFacts_AuthenticationMethod
+6 error Windows_NT 10.0.15063
+7 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+8 error node v6.11.1
+9 error npm  v3.10.10
+10 error path C:\Users\bobby\Documents\Dev\realMikeFacts\realMikeFacts_AuthenticationMethod\package.json
+11 error code ENOENT
+12 error errno -4058
+13 error syscall open
+14 error enoent ENOENT: no such file or directory, open 'C:\Users\bobby\Documents\Dev\realMikeFacts\realMikeFacts_AuthenticationMethod\package.json'
+15 error enoent ENOENT: no such file or directory, open 'C:\Users\bobby\Documents\Dev\realMikeFacts\realMikeFacts_AuthenticationMethod\package.json'
+15 error enoent This is most likely not a problem with npm itself
+15 error enoent and is related to npm not being able to find a file.
+16 verbose exit [ -4058, true ]

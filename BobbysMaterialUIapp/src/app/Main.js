@@ -15,7 +15,10 @@ import IconButton from 'material-ui/IconButton';
 import Share from 'material-ui/svg-icons/social/mood';
 import Logout from 'material-ui/svg-icons/action/power-settings-new';
 import Home from 'material-ui/svg-icons/action/home';
+import Menu from 'material-ui/svg-icons/navigation/menu';
 import TextField from 'material-ui/TextField';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
 import AppBarFacts from './appBar';
 import Foot from './Foot';
 import AuthService from './AuthService';
@@ -51,6 +54,7 @@ const styles = {
     textAlign: 'center',
     paddingTop: 0,
     marginTop: 0,
+    zIndex: 1,
   },
   container: {
     textAlign: 'center',
@@ -99,6 +103,27 @@ const styles = {
     height: 150,
     position: 'center',
     paddingTop: 80,
+  },
+    menuButton: {
+    margin: 0,
+    top: 20,
+    left: 0,
+    position: 'fixed',
+    zIndex: 10
+  },
+    menuIcon: {
+    margin: 0,
+    left: 30,
+    top: 25,
+    color: '#fff',
+    position: 'fixed',
+    zIndex: 10
+  },
+  credits: {
+    margin: 0, 
+    position: 'fixed', 
+    bottom: 10, 
+    left: 60
   }
 };
 
@@ -118,7 +143,8 @@ class Main extends Component {
 
 
     this.state = {
-      open2: false,
+      open: false, // This is the draw being opened or not. 
+      open2: false, // must change this name. 
       tweetValue: '',
       un: localStorage.id_username
     };
@@ -150,8 +176,10 @@ class Main extends Component {
       this.props.history.replace('/login');
     };
 
-  request = () => {
+    handleMenuOpen = () => {this.setState({open: !this.state.open})};
+    handleMenuClose = () => {this.setState({open: false})};
 
+  request = () => {
     fetch('http://96.232.94.109:8080/Message/' + this.state.tweetValue, {
       method: 'POST',
       mode: 'cors', 
@@ -165,7 +193,6 @@ class Main extends Component {
       })
     })
   }
-
   render() {
     const standardActions2 = (
       // Make the text field blank on submission
@@ -177,13 +204,38 @@ class Main extends Component {
       />
     );
 
-    var text;
-
-    return (
+   return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.center} >
           <AppBarFacts style={styles.top}/>
-
+          <FlatButton style={styles.menuButton} onClick={this.handleMenuOpen.bind(this)}>
+            <Menu style={styles.menuIcon}/>
+          </FlatButton>
+          <Drawer
+            docked={false}
+            width={250}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({open})}
+          > 
+            <AppBarFacts style={styles.top}/>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br> 
+            <MenuItem onClick={this.handleClose}>Home</MenuItem>
+            <MenuItem onClick={this.handleClose}>{this.state.un}'s tweet stats</MenuItem>
+            <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
+            <MenuItem onClick={this.handleClose}>About Us</MenuItem>
+            <div style={styles.credits}> 
+            <br></br>
+              realMikeFacts.com
+              <br></br>
+              A Bobby Luisi project
+              <br></br>
+              v2.0.1
+            </div>
+          </Drawer>
           <Dialog
             open={this.state.open2}
             title="Almost there..."

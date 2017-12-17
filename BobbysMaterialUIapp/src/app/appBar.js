@@ -30,13 +30,13 @@ const styles = {
     left: '50%',
     marginTop: -50,
     marginLeft: -95,
-    zIndex: '100',
+    zIndex: '0',
   }
 }
 const AppBarFacts = () => (
   <AppBar
     title={'#realMikeFacts'}
-    style={{position: 'fixed', backgroundColor: '#BA1313', opacity: 0.8, top: 0, left: 0}}
+    style={{position: 'fixed', backgroundColor: '#BA1313', opacity: 0.8, top: 0, left: 0, zIndex: 0}}
     showMenuIconButton={false}
   >
   </AppBar>
