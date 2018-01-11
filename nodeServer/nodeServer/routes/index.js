@@ -46,11 +46,9 @@ var Twitter = new TwitterPackage(secret);
 
 router.post('/Message/:React_Message', function(req, res, next) {
     readDataEngine(req.params.React_Message);
-    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST
+    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params 
     console.log(req.params.React_Message);
-    // Build the full tweet from REST API 
-   //fullTweet = tweetMessage + counter.toString() + ': ' + req.params.React_Message + hashTag;
-    //console.log(fullTweet);
+
     res.send(req.params);
 });
 
@@ -162,6 +160,16 @@ let users = [
         id: 14,
         username: 'JorgyPorgy',
         password: 'welovefacts'
+    }, 
+    {
+        id: 15, 
+        username: 'Jess', 
+        password: 'bobbyiscool'
+    }, 
+    {
+        id: 16, 
+        username: 'Lauren',
+        password: 'wontonrules'
     }
 
 ];
@@ -171,7 +179,7 @@ router.post('/login', (req, res) => {
      let token = null;
 
     for (let user of users) { // bunch of users to check out... 
-        if (username == user.username && password == user.password /* Use your password hash checking logic here !*/) {
+        if (username.toUpperCase() == user.username.toUpperCase() && password == user.password /* Use your password hash checking logic here !*/) {
             //If creds are dope and correct, do this code. 
             token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
             LOGIN_STATUS = true;
