@@ -46,7 +46,7 @@ var Twitter = new TwitterPackage(secret);
 
 router.post('/Message/:React_Message', function(req, res, next) {
     readDataEngine(req.params.React_Message);
-    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params 
+    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params
     console.log(req.params.React_Message);
 
     res.send(req.params);
@@ -78,7 +78,7 @@ function readDataEngine(msg){
                 //console.log(tweet); // Tweet body.
                 //console.log(response); // Raw response object.
             });
-            
+
             writeDataEngine(++returnParam);
         });
     counter = returnParam;
@@ -100,7 +100,7 @@ let users = [
         id: 2,
         username: 'RJHURLEY',
         password: 'supermike360'
-    }, 
+    },
     {
         id: 3,
         username: 'Jb',
@@ -110,7 +110,7 @@ let users = [
         id: 4,
         username: 'Bobby',
         password: 'ilovemike'
-    }, 
+    },
     {
         id: 5,
         username: 'brit',
@@ -120,9 +120,9 @@ let users = [
         id: 6,
         username: 'Nick',
         password: 'helloworld'
-    }, 
+    },
     {
-        id: 7, 
+        id: 7,
         username: 'Julia',
         password: 'facts4julia'
     },
@@ -132,42 +132,42 @@ let users = [
         password: 'facts4weed'
     },
     {
-        id: 9, 
+        id: 9,
         username: 'Woody',
         password: 'howsthehouse'
-    }, 
+    },
     {
-        id: 10, 
+        id: 10,
         username: 'Steve',
         password: 'dolfans'
-    }, 
+    },
     {
-        id: 11, 
+        id: 11,
         username: 'Mikesfriendcapt',
         password: '4Lokolemons'
     },
     {
-        id: 12, 
+        id: 12,
         username: 'welcome',
         password: 'welcome'
     },
     {
-        id: 13, 
+        id: 13,
         username: 'Jujujus2',
         password: 'facts4justin'
-    }, 
+    },
     {
         id: 14,
         username: 'JorgyPorgy',
         password: 'welovefacts'
-    }, 
+    },
     {
-        id: 15, 
-        username: 'Jess', 
+        id: 15,
+        username: 'Jess',
         password: 'bobbyiscool'
-    }, 
+    },
     {
-        id: 16, 
+        id: 16,
         username: 'Lauren',
         password: 'wontonrules'
     }
@@ -178,9 +178,9 @@ router.post('/login', (req, res) => {
     const { username, password } = req.body;
      let token = null;
 
-    for (let user of users) { // bunch of users to check out... 
+    for (let user of users) { // bunch of users to check out...
         if (username.toUpperCase() == user.username.toUpperCase() && password == user.password /* Use your password hash checking logic here !*/) {
-            //If creds are dope and correct, do this code. 
+            //If creds are dope and correct, do this code.
             token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
             LOGIN_STATUS = true;
             break;
@@ -214,7 +214,7 @@ router.get('/', jwtMW /* Using the express jwt MW here */, (req, res) => {
     res.send('You are authenticated'); //Sending some response when authenticated
 });
 
-//Error handling 
+//Error handling
 router.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') { // Send the error rather than to show it on the console
         res.status(401).send(err);
@@ -239,6 +239,10 @@ router.get('/imgMikeHash', function(req, res){
 
 router.get('/imgBanner', function(req, res){
     res.sendFile(__dirname + '/img/Real-Mike-Facts-Cover.png');
+});
+
+router.get('/imgHashMike', function(req, res){
+    res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-2.png')
 });
 
 

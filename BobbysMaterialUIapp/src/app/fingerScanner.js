@@ -1,9 +1,59 @@
 import React from 'react';
-import Img from 'react-image';
+//import './Login.css';
+import AuthService from './AuthService';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import {deepOrange500} from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import CircularProgress from 'material-ui/CircularProgress';
-import {deepOrange500} from 'material-ui/styles/colors';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import IconButton from 'material-ui/IconButton';
+import Home from 'material-ui/svg-icons/action/home';
+import Share from 'material-ui/svg-icons/social/mood';
+import TextField from 'material-ui/TextField';
+import AppBarFacts from './appBar';
+import Foot from './Foot';
+import Img from 'react-image';
+
+const style = {
+    margin: 12,
+    center: {
+        textAlign: 'center',
+        paddingTop: '15%',
+    },
+    title: {
+        textAlign: 'center',
+        margin: 0,
+    },
+    top: {
+        textAlign: 'center',
+        paddingTop: 0,
+        marginTop: 0,
+    },
+    LogoStyle: {
+        margin: 0,
+        height: 200,
+        position: 'center',
+        paddingTop: -50,
+    },
+    homeButton: {
+      margin: 0,
+      top: 'auto',
+      left: 0,
+      bottom: 0,
+      position: 'fixed',
+    },
+    homeIcon: {
+      margin: 0,
+      top: 'auto',
+      left: 30,
+      bottom: 8,
+      color: '#e74c3c',
+      position: 'fixed',
+    },
+};
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -11,80 +61,139 @@ const muiTheme = getMuiTheme({
   },
 });
 
-// CSS
-const styles = {
-    // Test css 
-    default : {
-        backgroundColor: '#fff',
-        position: 'absolute', 
-    },
-    scanSpot: {
-        // Move the scanner location with this.
-        // Size the scanner witht this. 
-        
-    },
-    thumbImg: {
-        height: 100,
-        marginLeft: 100,
-        position: 'absolute',
-        top: 50,
-        left: 35,
-        zIndex: -2, // UNDO 
-    },
-    scanImg: {
-        height: 100,
-        marginLeft: 100,
-        position: 'absolute',
-    },
-    circle: {
-        top: 10,
-        left: 110,
-        borderRadius: '50%',
-        width: 180,
-        height: 180, 
-        backgroundColor: '#e74c3c',
-        position: 'absolute',
-    }
-}
 
-
-class FingerScanner extends React.Component{
-    // defenitions 
-    constructor(props, context) {
-        super(props, context);
-        this.handleScan = this.handleScan.bind(this);
+class Login extends React.Component{
+    constructor(){
+        super()
+        this.handleChange = this.handleChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+        this.Auth = new AuthService();
 
         this.state = {
-            // default application states. 
-            value: 0,
-        }
+            username: '',
+            password: '',
+            formErrors: {email: '', password: ''},
+            emailValid: false,
+            passwordValid: false,
+            formValid: false
+
+        };
     }
 
-    // handles scanning
-    handleScan = () => {
-        // code changes state of click.
-        // state => pressed.\
-        let progressVal = 100;
-        this.setState = (progressVal) => {value: 100};
-    }
+    handleLogout = () => {
+      //Auth.logout()
+      this.props.history.replace('/');
+    };
 
-    render () { 
+    render(){
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={styles.default}>
-            <div style={styles.default}>  
-                <Img style={styles.thumbImg} src="http://www.freepngimg.com/download/fingerprint/1-2-fingerprint-free-download-png.png" />
-            </div>
-            <div style={styles.default}>
-                <CircularProgress mode="determinate" value={this.state.value} style={styles.scanImg} size={200} thickness={5} />
-            </div>
-            <div style={styles.circle} onClick={this.handleScan.bind(this)}>
-                <button onClick={this.handleScan.bind(this)}/>
-            </div>
-        </div>
+                <div style={style.center} >
+                    <AppBarFacts style={style.top}/>
+                    <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgHashMike" />
+                    <h1 style={style.title}>Sign Up for #realMikeFacts</h1>
+                    <form onSubmit={this.handleFormSubmit}>
+
+                        <TextField
+                            hintText="Username"
+                            errorText=""
+                            floatingLabelText="Enter super secret username"
+                            value={this.state.username}
+                            onChange={this.handleUserNameChange}
+                        /><br/>
+                        <TextField
+                            hintText="Password"
+                            type="password"
+                            errorText=""
+                            floatingLabelText="Enter MEGA secret password"
+                            value={this.state.password}
+                            onChange={this.handlePasswordChange}
+                        /><br />
+                        <RaisedButton
+                            style={style.button}
+                            type="submit"
+                            label="Sign Up!"
+                            disabled={!this.state.formValid}
+                            secondary={true}
+                            style={style}
+                        />
+                      <FlatButton style={style.homeButton} onClick={this.handleLogout.bind(this)}>
+                          <Home style={style.homeIcon}/>
+                        </FlatButton>
+                    </form>
+                    <Foot />
+                </div>
             </MuiThemeProvider>
         )
+
+    }
+    validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+
+    switch(fieldName) {
+        case 'username':
+        // create custom regex string.
+        emailValid = value.match(/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/i);
+        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        break;
+        case 'password':
+        passwordValid = value.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '': ' is too short';
+        break;
+        default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    emailValid: emailValid,
+                    passwordValid: passwordValid
+                    }, this.validateForm);
+
+    }
+
+    validateForm() {
+    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    }
+
+    handleUserNameChange = (e) => {
+        const name = 'username';
+        const value = e.target.value;
+        this.setState({
+            [name]: value},
+                        () => { this.validateField(name, value) });
+
+    }
+    handlePasswordChange = (e) => {
+        const name = 'password';
+        const value = e.target.value;
+        this.setState({
+            [name]: value},
+                        () => { this.validateField(name, value) });
+    }
+    handleChange(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+
+    }
+
+    handleFormSubmit(e){
+        e.preventDefault();
+
+        this.Auth.login(this.state.username,this.state.password)
+            .then(res =>{
+               this.props.history.replace('/fingerScanner');
+            })
+            .catch(err =>{
+                alert(err);
+            })
+    }
+    componentWillMount(){
+        if(this.Auth.loggedIn())
+            this.props.history.replace('/fingerScanner');
     }
 }
 
-export default FingerScanner;
+export default Login;

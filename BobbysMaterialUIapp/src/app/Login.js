@@ -35,7 +35,7 @@ const style = {
         margin: 0,
         height: 200,
         position: 'center',
-        paddingTop: -50,        
+        paddingTop: -50,
     }
 };
 
@@ -61,7 +61,7 @@ class Login extends React.Component{
             emailValid: false,
             passwordValid: false,
             formValid: false
-  
+
         };
     }
 
@@ -73,7 +73,7 @@ class Login extends React.Component{
                     <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgMikeHash" />
                     <h1 style={style.title}>Login to #realMikeFacts</h1>
                     <form onSubmit={this.handleFormSubmit}>
-                        
+
                         <TextField
                             hintText="Username"
                             errorText=""
@@ -89,13 +89,13 @@ class Login extends React.Component{
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
                         /><br />
-                        <RaisedButton 
+                        <RaisedButton
                             style={style.button}
-                            type="submit" 
+                            type="submit"
                             label="Login"
                             disabled={!this.state.formValid}
-                            secondary={true} 
-                            style={style} 
+                            secondary={true}
+                            style={style}
                         />
                     </form>
                     <Foot />
@@ -111,12 +111,12 @@ class Login extends React.Component{
 
     switch(fieldName) {
         case 'username':
-        // create custom regex string. 
+        // create custom regex string.
         emailValid = value.match(/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/i);
         fieldValidationErrors.email = emailValid ? '' : ' is invalid';
         break;
         case 'password':
-        passwordValid = value.length >= 6; 
+        passwordValid = value.length >= 6;
         fieldValidationErrors.password = passwordValid ? '': ' is too short';
         break;
         default:
@@ -126,7 +126,7 @@ class Login extends React.Component{
                     emailValid: emailValid,
                     passwordValid: passwordValid
                     }, this.validateForm);
-                    
+
     }
 
     validateForm() {
@@ -137,7 +137,7 @@ class Login extends React.Component{
         const name = 'username';
         const value = e.target.value;
         this.setState({
-            [name]: value}, 
+            [name]: value},
                         () => { this.validateField(name, value) });
 
     }
@@ -145,22 +145,22 @@ class Login extends React.Component{
         const name = 'password';
         const value = e.target.value;
         this.setState({
-            [name]: value}, 
+            [name]: value},
                         () => { this.validateField(name, value) });
     }
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value
         })
-        
+
     }
 
     handleFormSubmit(e){
         e.preventDefault();
-      
+
         this.Auth.login(this.state.username,this.state.password)
             .then(res =>{
-               this.props.history.replace('/');
+               this.props.history.replace('/fingerScanner');
             })
             .catch(err =>{
                 alert(err);
@@ -168,7 +168,7 @@ class Login extends React.Component{
     }
     componentWillMount(){
         if(this.Auth.loggedIn())
-            this.props.history.replace('/');
+            this.props.history.replace('/fingerScanner');
     }
 }
 
