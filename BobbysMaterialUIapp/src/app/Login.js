@@ -98,6 +98,8 @@ class Login extends React.Component{
                             style={style}
                         />
                     </form>
+                    <FlatButton style={{position: 'absolute', opacity: 1, bottom: '12%', left: '25%', right: '25%'}} label="Don't have an account?" href={"http://realMikeFacts.com/fingerScanner"} primary={true}/>
+                    <FlatButton style={{position: 'absolute', opacity: 1, bottom: '10%', left: '25%', right: '25%'}} label="Sign Up Here" href={"http://realMikeFacts.com/fingerScanner"} primary={true}/>
                     <Foot />
                 </div>
             </MuiThemeProvider>
@@ -160,7 +162,7 @@ class Login extends React.Component{
 
         this.Auth.login(this.state.username,this.state.password)
             .then(res =>{
-               this.props.history.replace('/fingerScanner');
+               this.props.history.replace('/');
             })
             .catch(err =>{
                 alert(err);
@@ -168,7 +170,7 @@ class Login extends React.Component{
     }
     componentWillMount(){
         if(this.Auth.loggedIn())
-            this.props.history.replace('/fingerScanner');
+            this.props.history.replace('/');
     }
 }
 
