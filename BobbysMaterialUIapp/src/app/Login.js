@@ -100,7 +100,7 @@ class Login extends React.Component{
                     </form>
                     <div style={{height: '3', padding: '200'}}>
                       <FlatButton style={{position: 'absolute', opacity: 1, bottom: '8%', left: '25%', right: '25%'}} label="Need an account?" href={"http://realMikeFacts.com/signUp"} primary={true}/>
-                      <FlatButton style={{position: 'absolute', opacity: 1, bottom: '6%', left: '25%', right: '25%'}} label="Sign Up" href={"http://realMikeFacts.com/fingerScanner"} primary={true}/>
+                      <FlatButton style={{position: 'absolute', opacity: 1, bottom: '6%', left: '25%', right: '25%'}} label="Sign Up" href={"http://realMikeFacts.com/signUp"} primary={true}/>
                     </div>
                     <Foot />
                 </div>
