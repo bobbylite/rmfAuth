@@ -65,7 +65,7 @@ const styles = {
   },
   share: {
     margin: 0,
-    bottom: -50, 
+    bottom: -50,
     textAlign: 'center',
   },
   homeButton: {
@@ -97,7 +97,7 @@ const styles = {
     bottom: 8,
     color: '#e74c3c',
     position: 'fixed',
-  }, 
+  },
   LogoStyle: {
     margin: 0,
     height: 150,
@@ -120,9 +120,9 @@ const styles = {
     zIndex: 10
   },
   credits: {
-    margin: 0, 
-    position: 'fixed', 
-    bottom: 10, 
+    margin: 0,
+    position: 'fixed',
+    bottom: 10,
     left: 60
   }
 };
@@ -143,8 +143,8 @@ class Main extends Component {
 
 
     this.state = {
-      open: false, // This is the draw being opened or not. 
-      open2: false, // must change this name. 
+      open: false, // This is the draw being opened or not.
+      open2: false, // must change this name.
       tweetValue: '',
       un: localStorage.id_username
     };
@@ -182,7 +182,7 @@ class Main extends Component {
   request = () => {
     fetch('http://96.232.94.109:8080/Message/' + this.state.tweetValue, {
       method: 'POST',
-      mode: 'cors', 
+      mode: 'cors',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -196,7 +196,7 @@ class Main extends Component {
   render() {
     const standardActions2 = (
       // Make the text field blank on submission
-      
+
       <FlatButton
         label="Send!"
         primary={true}
@@ -216,18 +216,18 @@ class Main extends Component {
             width={250}
             open={this.state.open}
             onRequestChange={(open) => this.setState({open})}
-          > 
+          >
             <AppBarFacts style={styles.top}/>
             <br></br>
             <br></br>
             <br></br>
             <br></br>
-            <br></br> 
+            <br></br>
             <MenuItem onClick={this.handleClose}>Home</MenuItem>
-            <MenuItem onClick={this.handleClose}>{this.state.un}'s tweet stats</MenuItem>
+            <MenuItem onClick={this.handleClose}>{this.state.un}s tweet stats</MenuItem>
             <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
             <MenuItem onClick={this.handleClose}>About Us</MenuItem>
-            <div style={styles.credits}> 
+            <div style={styles.credits}>
             <br></br>
               realMikeFacts.com
               <br></br>
@@ -255,13 +255,13 @@ class Main extends Component {
           />
           <FloatingActionButton style={styleAction}
             onTouchTap={this.handleTouchTap2}
-          >          
+          >
           <Img style={styles.imgStyle} src="http://realmikefacts.com:8080/imgMike" />
           </FloatingActionButton>
           <FlatButton style={styles.homeButton}>
             <Home style={styles.homeIcon}/>
           </FlatButton>
-            
+
           <FlatButton style={styles.logoutButton} onClick={this.handleLogout.bind(this)}>
             <Logout style={styles.logoutIcon}/>
           </FlatButton>

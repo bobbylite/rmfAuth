@@ -2,8 +2,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './Main'; // Our custom react component
-import Login from './Login'; // Custom react login component 
-import fingerScanner from './fingerScanner'; // Fun fingerPrint scanner idea! 
+import Login from './Login'; // Custom react login component
+import fingerScanner from './fingerScanner'; // Fun fingerPrint scanner idea!
 
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -17,6 +17,6 @@ render(<Router>
         <div>
             <Route path="/" exact component={Main} />
             <Route path="/login" component={Login} />
-            <Route path="/fingerScanner" component={fingerScanner} />
+            <Route path="/signUp" component={fingerScanner} />
         </div>
     </Router>, document.getElementById('app'));
