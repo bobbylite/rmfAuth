@@ -52,6 +52,7 @@ class Login extends React.Component{
         super()
         this.handleChange = this.handleChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
         this.Auth = new AuthService();
 
         this.state = {
@@ -65,6 +66,11 @@ class Login extends React.Component{
         };
     }
 
+    handleSignUp = () => {
+      //Auth.logout()
+      this.props.history.replace('/signUP');
+    };
+
     render(){
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -75,14 +81,14 @@ class Login extends React.Component{
                     <form onSubmit={this.handleFormSubmit}>
 
                         <TextField
-                            hintText="Username"
+                            hintText=""
                             errorText=""
                             floatingLabelText="Enter super secret username"
                             value={this.state.username}
                             onChange={this.handleUserNameChange}
                         /><br/>
                         <TextField
-                            hintText="Password"
+                            hintText=""
                             type="password"
                             errorText=""
                             floatingLabelText="Enter MEGA secret password"
@@ -98,10 +104,7 @@ class Login extends React.Component{
                             style={style}
                         />
                     </form>
-                    <div style={{height: '3', padding: '200'}}>
-                      <FlatButton style={{position: 'absolute', opacity: 1, bottom: '8%', left: '25%', right: '25%'}} label="Need an account?" href={"http://realMikeFacts.com/signUp"} primary={true}/>
-                      <FlatButton style={{position: 'absolute', opacity: 1, bottom: '6%', left: '25%', right: '25%'}} label="Sign Up" href={"http://realMikeFacts.com/signUp"} primary={true}/>
-                    </div>
+                    <FlatButton style={{position: 'center', opacity: 1, bottom: '10%', left: '25%', right: '25%'}} label="Sign Up Here" onClick={this.handleSignUp.bind(this)} primary={true}/>
                     <Foot />
                 </div>
             </MuiThemeProvider>

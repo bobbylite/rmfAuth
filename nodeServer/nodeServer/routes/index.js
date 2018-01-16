@@ -45,9 +45,9 @@ var Twitter = new TwitterPackage(secret);
 /* GET home page. */
 
 router.post('/Message/:React_Message', function(req, res, next) {
-    readDataEngine(req.params.React_Message);
-    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params
-    console.log(req.params.React_Message);
+    readDataEngine(req.body.tweet);
+    console.log(req.body.tweet); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params
+    console.log(req.params.React_Message); // RECEIVING JSON USING URL PARAMS.
 
     res.send(req.params);
 });
@@ -66,7 +66,7 @@ function writeDataEngine(data){
 function readDataEngine(msg){
     var returnParam;
     de.read('factCount')
-        .then(function(value){
+        .then(function(value){ // DATAENGINE MUST BE RUNNING TO POST. SINGLE POINT OF FAILURE.
             returnParam = value.factCount;
             console.log("Read: " + returnParam);
             fullTweet = tweetMessage + returnParam + ': ' + msg + hashTag;
