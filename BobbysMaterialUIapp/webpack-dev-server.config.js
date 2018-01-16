@@ -22,8 +22,8 @@ const config = {
         },
         hot: true, // Live-reload
         inline: true,
-        port: 80, // Port Number   
-        host: '192.168.1.2', // Change to '0.0.0.0' for external facing server
+        port: 80, // Port Number
+        host: '0.0.0.0', // Change to '0.0.0.0' for external facing server
         disableHostCheck: true,
         historyApiFallback: true,
     },

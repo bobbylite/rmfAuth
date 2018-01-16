@@ -46,7 +46,7 @@ var Twitter = new TwitterPackage(secret);
 
 router.post('/Message/:React_Message', function(req, res, next) {
     readDataEngine(req.body.tweet);
-    console.log(req.body.tweet); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params
+    console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params
     console.log(req.params.React_Message); // RECEIVING JSON USING URL PARAMS.
 
     res.send(req.params);
@@ -170,6 +170,11 @@ let users = [
         id: 16,
         username: 'Lauren',
         password: 'wontonrules'
+    },
+    {
+      id: 17,
+      username: 'Felicia',
+      password: 'iluvpiano'
     }
 
 ];
