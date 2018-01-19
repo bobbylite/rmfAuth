@@ -224,9 +224,9 @@ class Main extends Component {
             <br></br>
             <br></br>
             <MenuItem onClick={this.handleClose}>Home</MenuItem>
-            <MenuItem onClick={this.handleClose}>{this.state.un}s tweet stats</MenuItem>
             <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
             <MenuItem onClick={this.handleClose}>About Us</MenuItem>
+            <MenuItem onClick={this.handleLogout.bind(this)}><Logout style={styles.logoutIcon}/>Logout</MenuItem>
             <div style={styles.credits}>
             <br></br>
               realMikeFacts.com
@@ -258,13 +258,6 @@ class Main extends Component {
           >
           <Img style={styles.imgStyle} src="http://realmikefacts.com:8080/imgMike" />
           </FloatingActionButton>
-          <FlatButton style={styles.homeButton}>
-            <Home style={styles.homeIcon}/>
-          </FlatButton>
-
-          <FlatButton style={styles.logoutButton} onClick={this.handleLogout.bind(this)}>
-            <Logout style={styles.logoutIcon}/>
-          </FlatButton>
         </div>
       </MuiThemeProvider>
     );

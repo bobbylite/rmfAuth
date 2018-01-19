@@ -16,6 +16,9 @@ import TextField from 'material-ui/TextField';
 import AppBarFacts from './appBar';
 import Foot from './Foot';
 import Img from 'react-image';
+import Menu from 'material-ui/svg-icons/navigation/menu';
+import MenuItem from 'material-ui/MenuItem';
+import Drawer from 'material-ui/Drawer';
 
 const style = {
     margin: 12,
@@ -53,6 +56,27 @@ const style = {
       color: '#e74c3c',
       position: 'fixed',
     },
+    menuButton: {
+    margin: 0,
+    top: 20,
+    left: 0,
+    position: 'fixed',
+    zIndex: 10
+  },
+    menuIcon: {
+    margin: 0,
+    left: 30,
+    top: 25,
+    color: '#fff',
+    position: 'fixed',
+    zIndex: 10
+  },
+    credits: {
+      margin: 0,
+      position: 'fixed',
+      bottom: 10,
+      left: 60
+    }
 };
 
 const muiTheme = getMuiTheme({
@@ -82,15 +106,44 @@ class Login extends React.Component{
     }
 
     handleLogout = () => {
-      //Auth.logout()
       this.props.history.replace('/');
     };
+
+    handleMenuOpen = () => {this.setState({open: !this.state.open})};
+    handleMenuClose = () => {this.setState({open: false})};
 
     render(){
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={style.center} >
                     <AppBarFacts style={style.top}/>
+                      <FlatButton style={style.menuButton} onClick={this.handleMenuOpen.bind(this)}>
+                        <Menu style={style.menuIcon}/>
+                      </FlatButton>
+                      <Drawer
+                        docked={false}
+                        width={250}
+                        open={this.state.open}
+                        onRequestChange={(open) => this.setState({open})}
+                      >
+                        <AppBarFacts style={style.top}/>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <MenuItem onClick={this.handleLogout}>Home</MenuItem>
+                        <MenuItem onClick={this.handleSignUp}>Create Account</MenuItem>
+                        <MenuItem onClick={this.handleClose}>About Us</MenuItem>
+                        <div style={style.credits}>
+                        <br></br>
+                          realMikeFacts.com
+                          <br></br>
+                          A Bobby Luisi project
+                          <br></br>
+                          v2.0.1
+                        </div>
+                      </Drawer>
                     <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgHashMike" />
                     <h1 style={style.title}>Sign Up for #realMikeFacts</h1>
                     <form onSubmit={this.handleFormSubmit}>
@@ -118,9 +171,6 @@ class Login extends React.Component{
                             secondary={true}
                             style={style}
                         />
-                      <FlatButton style={style.homeButton} onClick={this.handleLogout.bind(this)}>
-                          <Home style={style.homeIcon}/>
-                        </FlatButton>
                     </form>
                 </div>
             </MuiThemeProvider>
