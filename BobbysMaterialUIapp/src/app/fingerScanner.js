@@ -122,7 +122,6 @@ class Login extends React.Component{
                           <Home style={style.homeIcon}/>
                         </FlatButton>
                     </form>
-                    <Foot />
                 </div>
             </MuiThemeProvider>
         )
