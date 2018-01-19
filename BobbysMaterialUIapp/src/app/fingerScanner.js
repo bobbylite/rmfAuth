@@ -119,8 +119,6 @@ class Login extends React.Component{
                             style={style}
                         />
                     </form>
-                    <Foot>
-                    </Foot>
                     <FlatButton style={style.homeButton} onClick={this.handleLogout.bind(this)}>
                       <Home style={style.homeIcon}/>
                     </FlatButton>

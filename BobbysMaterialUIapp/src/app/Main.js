@@ -266,7 +266,7 @@ class Main extends Component {
           <FlatButton style={styles.logoutButton} onClick={this.handleLogout.bind(this)}>
             <Logout style={styles.logoutIcon}/>
           </FlatButton>
-          <Foot />
+          
         </div>
       </MuiThemeProvider>
     );

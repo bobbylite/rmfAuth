@@ -19,10 +19,11 @@ import Img from 'react-image';
 const style = {
     margin: 12,
     center: {
+        position: 'center',
         textAlign: 'center',
         paddingTop: '15%',
         paddingLeft: 0,
-        marginLeft: 0,
+        margin: 'auto'
     },
     title: {
         textAlign: 'center',
@@ -106,8 +107,8 @@ class Login extends React.Component{
                             style={style}
                         />
                     </form>
-                    <FlatButton style={{position: 'center', opacity: 1, paddingBottom: 0, marginBottom: '30%', bottom: '10%', left: '25%', right: '25%'}} label="Sign Up Here" onClick={this.handleSignUp.bind(this)} primary={true}/>
-                    <Foot />
+                    <FlatButton style={{position: 'center', opacity: 1, margintop: "40", left: '25%', right: '25%'}} label="Sign Up Here" onClick={this.handleSignUp.bind(this)} primary={true}/>
+
                 </div>
             </MuiThemeProvider>
         )
