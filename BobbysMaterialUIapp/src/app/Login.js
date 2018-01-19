@@ -1,5 +1,5 @@
 import React from 'react';
-//import './Login.css';
+import AppBar from 'material-ui/AppBar';
 import AuthService from './AuthService';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
@@ -21,6 +21,8 @@ const style = {
     center: {
         textAlign: 'center',
         paddingTop: '15%',
+        paddingLeft: 0,
+        marginLeft: 0,
     },
     title: {
         textAlign: 'center',
@@ -104,7 +106,7 @@ class Login extends React.Component{
                             style={style}
                         />
                     </form>
-                    <FlatButton style={{position: 'center', opacity: 1, bottom: '10%', left: '25%', right: '25%'}} label="Sign Up Here" onClick={this.handleSignUp.bind(this)} primary={true}/>
+                    <FlatButton style={{position: 'center', opacity: 1, paddingBottom: 0, marginBottom: '30%', bottom: '10%', left: '25%', right: '25%'}} label="Sign Up Here" onClick={this.handleSignUp.bind(this)} primary={true}/>
                     <Foot />
                 </div>
             </MuiThemeProvider>

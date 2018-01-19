@@ -248,6 +248,7 @@ class Main extends Component {
           <h1 style={styles.container}> #realMikeFacts</h1>
           <h3>Welcome back, {this.state.un}!</h3>
           <TextField
+            style={{paddingBottom: 0, marginBottom: '65%'}}
             hintText="Fact About Mike"
             value={this.state.tweetValue}
             onChange={this.handleTextFieldChange}

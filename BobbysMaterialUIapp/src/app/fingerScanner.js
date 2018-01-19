@@ -93,7 +93,7 @@ class Login extends React.Component{
                     <AppBarFacts style={style.top}/>
                     <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgHashMike" />
                     <h1 style={style.title}>Sign Up for #realMikeFacts</h1>
-                    <form onSubmit={this.handleFormSubmit}>
+                    <form style={{paddingBottom: 0, marginBottom: '39%'}} onSubmit={this.handleFormSubmit}>
 
                         <TextField
                             hintText="Username"
@@ -118,11 +118,12 @@ class Login extends React.Component{
                             secondary={true}
                             style={style}
                         />
-                      <FlatButton style={style.homeButton} onClick={this.handleLogout.bind(this)}>
-                          <Home style={style.homeIcon}/>
-                        </FlatButton>
                     </form>
-                    <Foot />
+                    <Foot>
+                    </Foot>
+                    <FlatButton style={style.homeButton} onClick={this.handleLogout.bind(this)}>
+                      <Home style={style.homeIcon}/>
+                    </FlatButton>
                 </div>
             </MuiThemeProvider>
         )
