@@ -223,7 +223,7 @@ class Main extends Component {
             <br></br>
             <br></br>
             <br></br>
-            <MenuItem onClick={this.handleClose}>Home</MenuItem>
+            <MenuItem onClick={this.handleMenuClose}>Home</MenuItem>
             <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
             <MenuItem onClick={this.handleClose}>About Us</MenuItem>
             <MenuItem onClick={this.handleLogout.bind(this)}><Logout style={styles.logoutIcon}/>Logout</MenuItem>

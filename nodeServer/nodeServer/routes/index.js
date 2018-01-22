@@ -76,7 +76,7 @@ function readDataEngine(msg){
                     console.log(error);
                 }
                 //console.log(tweet); // Tweet body.
-                //console.log(response); // Raw response object.
+                console.log(response.body); // Raw response object.
             });
 
             writeDataEngine(++returnParam);
@@ -175,6 +175,11 @@ let users = [
       id: 17,
       username: 'Felicia',
       password: 'iluvpiano'
+    },
+    {
+      id: 18,
+      username: 'Vic',
+      password: 'mskhascancer'
     }
 
 ];
@@ -227,6 +232,10 @@ router.use(function (err, req, res, next) {
     else {
         next(err);
     }
+});
+
+router.post('/CreateUser/', (req, res) => {
+  console.log(req.body);
 });
 
 // Image replies

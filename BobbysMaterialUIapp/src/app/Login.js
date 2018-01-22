@@ -123,7 +123,7 @@ class Login extends React.Component{
                       <br></br>
                       <br></br>
                       <br></br>
-                      <MenuItem onClick={this.handleClose}>Home</MenuItem>
+                      <MenuItem onClick={this.handleMenuClose}>Home</MenuItem>
                       <MenuItem onClick={this.handleSignUp}>Create Account</MenuItem>
                       <MenuItem onClick={this.handleClose}>About Us</MenuItem>
                       <div style={style.credits}>

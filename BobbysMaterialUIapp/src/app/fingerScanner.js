@@ -19,6 +19,7 @@ import Img from 'react-image';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
+import bcrypt from 'bcryptjs';
 
 const style = {
     margin: 12,
@@ -86,7 +87,7 @@ const muiTheme = getMuiTheme({
 });
 
 
-class Login extends React.Component{
+class fingerScanner extends React.Component{
     constructor(){
         super()
         this.handleChange = this.handleChange.bind(this);
@@ -133,7 +134,7 @@ class Login extends React.Component{
                         <br></br>
                         <br></br>
                         <MenuItem onClick={this.handleLogout}>Home</MenuItem>
-                        <MenuItem onClick={this.handleSignUp}>Create Account</MenuItem>
+                        <MenuItem onClick={this.handleMenuClose}>Create Account</MenuItem>
                         <MenuItem onClick={this.handleClose}>About Us</MenuItem>
                         <div style={style.credits}>
                         <br></br>
@@ -177,6 +178,7 @@ class Login extends React.Component{
         )
 
     }
+
     validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
     let emailValid = this.state.emailValid;
@@ -229,20 +231,29 @@ class Login extends React.Component{
     }
 
     handleFormSubmit(e){
-        e.preventDefault();
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(this.state.password, salt, (err, hash) => {
+          fetch('http://96.232.94.109:8080/CreateUser', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              Username: this.state.username, // This is a test to retrieve POST
+              Password: hash, // This is a test to retrieve POST
+            })
+          })
+        });
+      });
 
-        this.Auth.login(this.state.username,this.state.password)
-            .then(res =>{
-               this.props.history.replace('/fingerScanner');
-            })
-            .catch(err =>{
-                alert(err);
-            })
     }
+
     componentWillMount(){
         if(this.Auth.loggedIn())
             this.props.history.replace('/fingerScanner');
     }
 }
 
-export default Login;
+export default fingerScanner;
