@@ -206,8 +206,9 @@ function findUser(guessUser, guessPass, res){
       response.on('data', function (body) {
         var dataEngineObj = JSON.parse(body)
         for(var i=0; i < Object.keys(dataEngineObj).length; i++){
+          var falseSet = false
           console.log(dataEngineObj[i].content.username); /// WOOO!
-          if(dataEngineObj[i].content.username == guessUser){
+          if(dataEngineObj[i].content.username.toUpperCase() == guessUser.toUpperCase()){
             if(bcrypt.compareSync(guessPass, dataEngineObj[i].content.password)){
               console.log("Correct guess")
               token = jwt.sign({ id: 0, username: dataEngineObj[i].content.username}, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
@@ -232,9 +233,10 @@ function findUser(guessUser, guessPass, res){
                         token: null,
                         err: 'Username or password is incorrect'
                     });
+                    falseSet = true
             }
           }
-          if((dataEngineObj[i].content.username != guessUser) && (i == Object.keys(dataEngineObj).length-1)){
+          if((dataEngineObj[i].content.username.toUpperCase() != guessUser.toUpperCase()) && falseSet && (i == Object.keys(dataEngineObj).length-1)){
             if(LOGIN_STATUS != true){
               res.json({
                   sucess: false,
