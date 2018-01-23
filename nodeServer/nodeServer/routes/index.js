@@ -234,13 +234,15 @@ function findUser(guessUser, guessPass, res){
                     });
             }
           }
-          if(dataEngineObj[i].content.username != guessUser){
-            res.json({
-                sucess: false,
-                token: null,
-                err: 'Username or password is incorrect'
-            });
-            break;
+          if((dataEngineObj[i].content.username != guessUser) && (i == Object.keys(dataEngineObj).length-1)){
+            if(LOGIN_STATUS != true){
+              res.json({
+                  sucess: false,
+                  token: null,
+                  err: 'Username or password is incorrect'
+              });
+              break;
+            }
           }
         }
       })
