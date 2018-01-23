@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
 var cors = require('cors');
+var bcrypt = require('bcrypt');
 var router = express.Router();
 var TwitterPackage = require('twitter');
 const jwt = require('jsonwebtoken');
@@ -183,36 +184,72 @@ let users = [
     }
 
 ];
+
+function findUser(guessUser, guessPass, res){
+  var options = {
+      hostname: '127.0.0.1',
+      port: 4300,
+      path: '/_data/Users',
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+  };
+  var request = http.request(options, (response) =>{
+      response.setEncoding('utf8');
+      response.on('data', function (body) {
+        var dataEngineObj = JSON.parse(body)
+        for(var i=0; i < Object.keys(dataEngineObj).length; i++){
+          console.log(dataEngineObj[i].content.username); /// WOOO!
+          if(dataEngineObj[i].content.username == guessUser){
+            if(bcrypt.compareSync(guessPass, dataEngineObj[i].content.password)){
+              console.log("Correct guess")
+              token = jwt.sign({ id: 0, username: dataEngineObj[i].content.username}, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
+              LOGIN_STATUS = true;
+            }
+            else {
+              LOGIN_STATUS = false;
+            }
+          }
+        }
+      })
+
+  })
+
+
+  request.on('error', (e) => {
+    console.log(e.message)
+  })
+
+  request.end();
+
+  if (LOGIN_STATUS == true){
+          console.log('User: ', guessUser, '\nLogged in on: ', today.getMonth(), "/",
+                                                      today.getDate(),"at",today.getHours(),":",today.getMinutes() );
+
+          res.json({
+              sucess: true,
+              err: null,
+              token
+          });
+  }
+  else if(LOGIN_STATUS == false){
+          res.json({
+              sucess: false,
+              token: null,
+              err: 'Username or password is incorrect'
+          });
+  }
+};
 // LOGIN ROUTE
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
      let token = null;
-
-     var options = {
-         hostname: '127.0.0.1',
-         port: 4300,
-         path: '/_data/Users',
-         method: 'GET',
-         headers: {
-             'Content-Type': 'application/json',
-         }
-     };
-     var request = http.request(options, (response) =>{
-         response.setEncoding('utf8');
-         response.on('data', function (body) {
-           var dataEngineObj = JSON.parse(body)
-             console.log(dataEngineObj[0].key);
-         })
-     })
-
-     request.on('error', (e) => {
-       console.log(e.message)
-     })
-
-     request.end();
-
+    findUser(username, password, res)
+    /*
     for (let user of users) { // bunch of users to check out...
-        if (username.toUpperCase() == user.username.toUpperCase() && password == user.password /* Use your password hash checking logic here !*/) {
+
+        if (username.toUpperCase() == user.username.toUpperCase() && password == user.password ) {// Use your password hash checking logic here
             //If creds are dope and correct, do this code.
             token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
             LOGIN_STATUS = true;
@@ -241,6 +278,7 @@ router.post('/login', (req, res) => {
                 err: 'Username or password is incorrect'
             });
     }
+    */
 });
 
 router.get('/', jwtMW /* Using the express jwt MW here */, (req, res) => {
