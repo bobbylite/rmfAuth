@@ -181,11 +181,17 @@ let users = [
       id: 18,
       username: 'Vic',
       password: 'mskhascancer'
+    },
+    {
+      id: 19,
+      username: 'lol',
+      password: 'thisisatest'
     }
 
 ];
 
 function findUser(guessUser, guessPass, res){
+
   var options = {
       hostname: '127.0.0.1',
       port: 4300,
@@ -210,6 +216,23 @@ function findUser(guessUser, guessPass, res){
             else {
               LOGIN_STATUS = false;
             }
+            if (LOGIN_STATUS == true){
+                    console.log('User: ', guessUser, '\nLogged in on: ', today.getMonth(), "/",
+                                                                today.getDate(),"at",today.getHours(),":",today.getMinutes() );
+
+                    res.json({
+                        sucess: true,
+                        err: null,
+                        token
+                    });
+            }
+            else if(LOGIN_STATUS == false){
+                    res.json({
+                        sucess: false,
+                        token: null,
+                        err: 'Username or password is incorrect'
+                    });
+            }
           }
         }
       })
@@ -222,24 +245,6 @@ function findUser(guessUser, guessPass, res){
   })
 
   request.end();
-
-  if (LOGIN_STATUS == true){
-          console.log('User: ', guessUser, '\nLogged in on: ', today.getMonth(), "/",
-                                                      today.getDate(),"at",today.getHours(),":",today.getMinutes() );
-
-          res.json({
-              sucess: true,
-              err: null,
-              token
-          });
-  }
-  else if(LOGIN_STATUS == false){
-          res.json({
-              sucess: false,
-              token: null,
-              err: 'Username or password is incorrect'
-          });
-  }
 };
 // LOGIN ROUTE
 router.post('/login', (req, res) => {
