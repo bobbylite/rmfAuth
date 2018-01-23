@@ -231,7 +231,7 @@ class fingerScanner extends React.Component{
     }
 
     handleFormSubmit(e){
-      bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.genSalt(4, (err, salt) => {
         bcrypt.hash(this.state.password, salt, (err, hash) => {
           fetch('http://96.232.94.109:8080/CreateUser', {
             method: 'POST',
@@ -241,11 +241,11 @@ class fingerScanner extends React.Component{
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              Username: this.state.username, // This is a test to retrieve POST
-              Password: hash, // This is a test to retrieve POST
+              Username: this.state.username,
+              Password: hash, // bcrypt hash being sent via POST.
             })
           })
-        });
+        })
       });
 
     }

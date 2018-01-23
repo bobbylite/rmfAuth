@@ -12,6 +12,8 @@ var fullTweet = '';
 var hashTag = ' #realMikeFacts';
 const fs = require('fs');
 
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false}));
 
 var LOGIN_STATUS = false;
 
@@ -21,9 +23,6 @@ router.use((req, res, next) => {
     next();
 });
 
-
-router.use(bodyParser.urlencoded({ extended: true}));
-router.use(bodyParser.json());
 
 var deOptions = {
     host: '127.0.0.1',
@@ -234,8 +233,10 @@ router.use(function (err, req, res, next) {
     }
 });
 
-router.post('/CreateUser/', (req, res) => {
-  console.log(req.body);
+// recieves the request for creating a new user.
+router.post('/CreateUser', function(request, response) {
+  console.log(request.body.Username)
+  console.log(request.body.Password)
 });
 
 // Image replies
