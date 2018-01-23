@@ -234,9 +234,16 @@ function findUser(guessUser, guessPass, res){
                     });
             }
           }
+          if(dataEngineObj[i].content.username != guessUser){
+            res.json({
+                sucess: false,
+                token: null,
+                err: 'Username or password is incorrect'
+            });
+            break;
+          }
         }
       })
-
   })
 
 
@@ -330,6 +337,9 @@ router.post('/CreateUser', function(request, response) {
   // for PATCH only
   //req.write('[{"op":"add", "path":"/'+ request.body.Username +'", "value":"'+ request.body.Password +'"}]')
   req.end();
+  response.json({
+    sucess: true,
+  })
 });
 
 // Image replies

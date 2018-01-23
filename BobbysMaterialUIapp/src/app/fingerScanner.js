@@ -244,6 +244,8 @@ class fingerScanner extends React.Component{
               Username: this.state.username,
               Password: hash, // bcrypt hash being sent via POST.
             })
+          }).then(res =>{
+            // do something with response.
           })
         })
       });
