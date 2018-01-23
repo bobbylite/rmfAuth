@@ -195,7 +195,7 @@ function findUser(guessUser, guessPass, res){
   var options = {
       hostname: '127.0.0.1',
       port: 4300,
-      path: '/_data/Users',
+      path: '/_data/Users/?filter='+guessUser, // TRY using the KEY ONLY part and once a username is matched... then look up the whole object. 
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ function findUser(guessUser, guessPass, res){
         var dataEngineObj = JSON.parse(body)
         for(var i=0; i < Object.keys(dataEngineObj).length; i++){
           var falseSet = false
-          console.log(dataEngineObj[i].content.username); /// WOOO!
+          console.log("Username: " + dataEngineObj[i].content.username); /// WOOO!
           if(dataEngineObj[i].content.username.toUpperCase() == guessUser.toUpperCase()){
             if(bcrypt.compareSync(guessPass, dataEngineObj[i].content.password)){
               console.log("Correct guess")
@@ -236,14 +236,18 @@ function findUser(guessUser, guessPass, res){
                     falseSet = true
             }
           }
-          if((dataEngineObj[i].content.username.toUpperCase() != guessUser.toUpperCase()) && falseSet && (i == Object.keys(dataEngineObj).length-1)){
+          if(dataEngineObj[i].content.username.toUpperCase() != guessUser.toUpperCase() && i == Object.keys(dataEngineObj).length-1){
             if(LOGIN_STATUS != true){
-              res.json({
-                  sucess: false,
-                  token: null,
-                  err: 'Username or password is incorrect'
-              });
-              break;
+              try{
+                res.json({
+                    sucess: false,
+                    token: null,
+                    err: 'Username or password is incorrect'
+                });
+                break;
+              } catch (err) {
+                console.log("lolololol")
+              }
             }
           }
         }
@@ -252,7 +256,7 @@ function findUser(guessUser, guessPass, res){
 
 
   request.on('error', (e) => {
-    console.log(e.message)
+    console.log("ERROR: " + e.message)
   })
 
   request.end();
