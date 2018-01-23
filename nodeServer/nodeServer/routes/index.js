@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var http = require('http');
 var cors = require('cors');
 var router = express.Router();
 var TwitterPackage = require('twitter');
@@ -187,6 +188,29 @@ router.post('/login', (req, res) => {
     const { username, password } = req.body;
      let token = null;
 
+     var options = {
+         hostname: '127.0.0.1',
+         port: 4300,
+         path: '/_data/Users',
+         method: 'GET',
+         headers: {
+             'Content-Type': 'application/json',
+         }
+     };
+     var request = http.request(options, (response) =>{
+         response.setEncoding('utf8');
+         response.on('data', function (body) {
+           var dataEngineObj = JSON.parse(body)
+             console.log(dataEngineObj[0].key);
+         })
+     })
+
+     request.on('error', (e) => {
+       console.log(e.message)
+     })
+
+     request.end();
+
     for (let user of users) { // bunch of users to check out...
         if (username.toUpperCase() == user.username.toUpperCase() && password == user.password /* Use your password hash checking logic here !*/) {
             //If creds are dope and correct, do this code.
@@ -237,6 +261,32 @@ router.use(function (err, req, res, next) {
 router.post('/CreateUser', function(request, response) {
   console.log(request.body.Username)
   console.log(request.body.Password)
+
+  var options = {
+      hostname: '127.0.0.1',
+      port: 4300,
+      path: '/_data/Users/' + request.body.Username,
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+  };
+  var req = http.request(options, (res) =>{
+      res.setEncoding('utf8');
+      res.on('data', function (body) {
+          console.log(body);
+      })
+  })
+
+  req.on('error', (e) => {
+    console.log("Erro: " + e.message)
+  })
+
+  req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": { } }')
+
+  // for PATCH only
+  //req.write('[{"op":"add", "path":"/'+ request.body.Username +'", "value":"'+ request.body.Password +'"}]')
+  req.end();
 });
 
 // Image replies
