@@ -90,178 +90,6 @@ const jwtMW = exjwt({
     secret: 'keyboard cat 4 ever'
 });
 
-// Users go here temp.  This will migrate to a user database later on.
-let users = [
-    {
-        id: 1,
-        username: 'Mike',
-        password: 'theogmike'
-    },
-    {
-        id: 2,
-        username: 'RJHURLEY',
-        password: 'supermike360'
-    },
-    {
-        id: 3,
-        username: 'Jb',
-        password: 'welcome'
-    },
-    {
-        id: 4,
-        username: 'Bobby',
-        password: 'ilovemike'
-    },
-    {
-        id: 5,
-        username: 'brit',
-        password: 'welcome'
-    },
-    {
-        id: 6,
-        username: 'Nick',
-        password: 'helloworld'
-    },
-    {
-        id: 7,
-        username: 'Julia',
-        password: 'facts4julia'
-    },
-    {
-        id: 8,
-        username: 'John',
-        password: 'facts4weed'
-    },
-    {
-        id: 9,
-        username: 'Woody',
-        password: 'howsthehouse'
-    },
-    {
-        id: 10,
-        username: 'Steve',
-        password: 'dolfans'
-    },
-    {
-        id: 11,
-        username: 'Mikesfriendcapt',
-        password: '4Lokolemons'
-    },
-    {
-        id: 12,
-        username: 'welcome',
-        password: 'welcome'
-    },
-    {
-        id: 13,
-        username: 'Jujujus2',
-        password: 'facts4justin'
-    },
-    {
-        id: 14,
-        username: 'JorgyPorgy',
-        password: 'welovefacts'
-    },
-    {
-        id: 15,
-        username: 'Jess',
-        password: 'bobbyiscool'
-    },
-    {
-        id: 16,
-        username: 'Lauren',
-        password: 'wontonrules'
-    },
-    {
-      id: 17,
-      username: 'Felicia',
-      password: 'iluvpiano'
-    },
-    {
-      id: 18,
-      username: 'Vic',
-      password: 'mskhascancer'
-    },
-    {
-      id: 19,
-      username: 'lol',
-      password: 'thisisatest'
-    }
-
-];
-
-function findUserOLD(guessUser, guessPass, res){
-
-  var options = {
-      hostname: '127.0.0.1',
-      port: 4300,
-      path: '/_data/Users/?filter=',//+guessUser, // TRY using the KEY ONLY part and once a username is matched... then look up the whole object.
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      }
-  };
-  var request = http.request(options, (response) =>{
-      response.setEncoding('utf8');
-      response.on('data', function (body) {
-        var dataEngineObj = JSON.parse(body)
-        for(var i=0; i < Object.keys(dataEngineObj).length; i++){
-          var falseSet = false
-          console.log("Username: " + dataEngineObj[i].content.username); /// WOOO!
-          if(dataEngineObj[i].content.username.toUpperCase() == guessUser.toUpperCase()){
-            if(bcrypt.compareSync(guessPass, dataEngineObj[i].content.password)){
-              console.log("Correct guess")
-              token = jwt.sign({ id: 0, username: dataEngineObj[i].content.username}, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
-              LOGIN_STATUS = true;
-            }
-            else {
-              LOGIN_STATUS = false;
-            }
-            if (LOGIN_STATUS == true){
-                    console.log('User: ', guessUser, '\nLogged in on: ', today.getMonth(), "/",
-                                                                today.getDate(),"at",today.getHours(),":",today.getMinutes() );
-
-                    res.json({
-                        sucess: true,
-                        err: null,
-                        token
-                    });
-            }
-            else if(LOGIN_STATUS == false){
-                    res.json({
-                        sucess: false,
-                        token: null,
-                        err: 'Username or password is incorrect'
-                    });
-                    falseSet = true
-            }
-          }
-          if(dataEngineObj[i].content.username.toUpperCase() != guessUser.toUpperCase() && i == Object.keys(dataEngineObj).length-1){
-            if(LOGIN_STATUS != true){
-              try{
-                res.json({
-                    sucess: false,
-                    token: null,
-                    err: 'Username or password is incorrect'
-                });
-                break;
-              } catch (err) {
-                console.log("lolololol")
-              }
-            }
-          }
-        }
-      })
-  })
-
-
-  request.on('error', (e) => {
-    console.log("ERROR: " + e.message)
-  })
-
-  request.end();
-};
-
 function findUser(user, password, passedRes){
   var options = {
   hostname: '127.0.0.1',
@@ -329,13 +157,10 @@ function findUser(user, password, passedRes){
           }
         }
       }
-      //object.statusCode = 200
-      //object.send(body)
     }).catch(
       (reason) => {
         console.log(reason)
     })
-
 };// end of findUser()
 
 function compare(object, objHash){
@@ -376,39 +201,6 @@ router.post('/login', (req, res) => {
     const { username, password } = req.body;
      let token = null;
     findUser(username, password, res)
-    /*
-    for (let user of users) { // bunch of users to check out...
-
-        if (username.toUpperCase() == user.username.toUpperCase() && password == user.password ) {// Use your password hash checking logic here
-            //If creds are dope and correct, do this code.
-            token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
-            LOGIN_STATUS = true;
-            break;
-        }
-
-        else {
-            LOGIN_STATUS = false;
-        }
-    } // end of for loop
-
-    if (LOGIN_STATUS == true){
-            console.log('User: ', username, '\nLogged in on: ', today.getMonth(), "/",
-                                                        today.getDate(),"at",today.getHours(),":",today.getMinutes() );
-
-            res.json({
-                sucess: true,
-                err: null,
-                token
-            });
-    }
-    else if(LOGIN_STATUS == false){
-            res.json({
-                sucess: false,
-                token: null,
-                err: 'Username or password is incorrect'
-            });
-    }
-    */
 });
 
 router.get('/', jwtMW /* Using the express jwt MW here */, (req, res) => {
