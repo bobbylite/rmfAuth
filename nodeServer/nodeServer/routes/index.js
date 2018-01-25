@@ -304,24 +304,30 @@ function findUser(user, password, passedRes){
       var x = JSON.parse(val)
       console.log("Username: " + x[0].content['username'])
       console.log("Number of keys: " + x.length)
-      if(x[0].content['username'].toUpperCase() == user.toUpperCase()){ // Check if the username guessed exists... undefined means NO.
-        console.log("Password: "  + x[0].content['password'])
-        var comparePromise = compare(password, x[0].content['password'])
-        comparePromise.then(
-          (successData) => {
-            logme(successData, passedRes, x[0].content['username'])
-          },
-          (errorData) => {
-              onError(errorData, passedRes)
-          })
-      }
-      else{
-        console.log("That username doesn't exist")
-        passedRes.json({
-            sucess: false,
-            token: null,
-            err: 'Username or password is incorrect'
-        });
+      for(var i=0; i< x.length-1; i++){
+        if(x[i].content['username'].toUpperCase() == user.toUpperCase()){ // Check if the username guessed exists... undefined means NO.
+          console.log("Password: "  + x[i].content['password'])
+          var comparePromise = compare(password, x[i].content['password'])
+          comparePromise.then(
+            (successData) => {
+              logme(successData, passedRes, x[i].content['username'])
+            },
+            (errorData) => {
+              if(i == x.length-1){
+                onError(errorData, passedRes)
+              }
+            })
+        }
+        else{
+          console.log("That username doesn't exist")
+          if(i== x.length-1){
+            passedRes.json({
+                sucess: false,
+                token: null,
+                err: 'Username or password is incorrect'
+            });
+          }
+        }
       }
       //object.statusCode = 200
       //object.send(body)
