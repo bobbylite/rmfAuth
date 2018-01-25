@@ -190,12 +190,12 @@ let users = [
 
 ];
 
-function findUser(guessUser, guessPass, res){
+function findUserOLD(guessUser, guessPass, res){
 
   var options = {
       hostname: '127.0.0.1',
       port: 4300,
-      path: '/_data/Users/?filter='+guessUser, // TRY using the KEY ONLY part and once a username is matched... then look up the whole object. 
+      path: '/_data/Users/?filter=',//+guessUser, // TRY using the KEY ONLY part and once a username is matched... then look up the whole object.
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
@@ -261,6 +261,110 @@ function findUser(guessUser, guessPass, res){
 
   request.end();
 };
+
+function findUser(user, password, passedRes){
+  var options = {
+  hostname: '127.0.0.1',
+  port: 4300,
+  path: '/_data/Users/',
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    } //headers
+  } //deOptions
+
+  let body = [];
+  let promise = new Promise(
+    (resolve, reject) => {
+      var deReq = http.request(options, (res) => {
+        res.setEncoding('utf8')
+        res.on('data', (chunk) => {
+          console.log('RECEIVING DATA CHUNK')
+          body.push(chunk)
+        })// end on data received
+        res.on('end', () => {
+          var newObj = body[0]
+          console.log("Array Size: " + body.length)
+          for(var i=0; i < body.length-1; i++){
+            console.log("Loop: " + i.toString())
+            newObj = body[i].concat(body[i+1])
+          }
+          resolve(newObj)
+        })// end on end
+        res.on('error', (err) => {
+          console.log(err)
+        })
+      }); // end of deReq
+
+      deReq.end()
+    });// end of promise
+
+  promise.then(
+    (val) => {
+      var x = JSON.parse(val)
+      console.log("Username: " + x[0].content['username'])
+      console.log("Number of keys: " + x.length)
+      if(x[0].content['username'].toUpperCase() == user.toUpperCase()){ // Check if the username guessed exists... undefined means NO.
+        console.log("Password: "  + x[0].content['password'])
+        var comparePromise = compare(password, x[0].content['password'])
+        comparePromise.then(
+          (successData) => {
+            logme(successData, passedRes, x[0].content['username'])
+          },
+          (errorData) => {
+              onError(errorData, passedRes)
+          })
+      }
+      else{
+        console.log("That username doesn't exist")
+        passedRes.json({
+            sucess: false,
+            token: null,
+            err: 'Username or password is incorrect'
+        });
+      }
+      //object.statusCode = 200
+      //object.send(body)
+    }).catch(
+      (reason) => {
+        console.log(reason)
+    })
+
+};// end of findUser()
+
+function compare(object, objHash){
+  return bcrypt.compare(object, objHash).then((res) => {
+      return res;
+  });
+}
+
+function onError(data, res){
+  console.log("Status: "+data)
+  res.json({
+      sucess: false,
+      token: null,
+      err: 'Username or password is incorrect'
+  });
+}
+
+function logme(data, res, username) {
+  console.log("Status: "+data)
+  if(data){
+    var token = jwt.sign({ id: 0, username: username}, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
+    res.json({
+        sucess: data,
+        err: null,
+        token
+    });
+  } else {
+    res.json({
+        sucess: false,
+        token: null,
+        err: 'Username or password is incorrect'
+    });
+  }
+}
+
 // LOGIN ROUTE
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
