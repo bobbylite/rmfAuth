@@ -224,8 +224,12 @@ class Login extends React.Component{
 
         this.Auth.login(this.state.username,this.state.password)
             .then(res =>{
-              //console.log(res)
-              this.props.history.replace('/');
+              if(JSON.stringify(res.sucess) == 'false'){
+                this.setState({
+                  username: '',
+                  password: ''
+                })
+              }
             })
             .catch(err =>{
                 alert(err);
