@@ -229,6 +229,7 @@ router.use(function (err, req, res, next) {
 router.post('/CreateUser', function(request, response) {
   console.log(request.body.Username)
   console.log(request.body.Password)
+  var exists = false
 
   var options = {
       hostname: '127.0.0.1',
@@ -239,25 +240,74 @@ router.post('/CreateUser', function(request, response) {
           'Content-Type': 'application/json',
       }
   };
-  var req = http.request(options, (res) =>{
-      res.setEncoding('utf8');
-      res.on('data', function (body) {
-          console.log(body);
+  var checkOptions = {
+      hostname: '127.0.0.1',
+      port: 4300,
+      path: '/_data/Users/' + request.body.Username,
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+  };
+
+  let promise = new Promise(
+    (resolve, reject) => {
+      var checkReq = http.request(checkOptions, (res) =>{
+        res.setEncoding('utf8');
+        res.on('data', (body) => {
+          var x = JSON.parse(body)
+          if(x.username != undefined){
+            exists = true
+            resolve(exists)
+          }
+          else{
+            exists = false
+            resolve(exists)
+          }
+        })
+        res.on('error', (err) => {
+          console.log("EXISTS")
+          console.log(err)
+        })
       })
-  })
+      checkReq.end() // move this.
+    })
 
-  req.on('error', (e) => {
-    console.log("Erro: " + e.message)
-  })
+  promise.then(
+    (eon) => {
+      console.log("DOES EXIST: " + eon)
+      if(!eon){
+        var req = http.request(options, (res) =>{
+            res.setEncoding('utf8');
+            res.on('data', function (body) {
+                console.log(body);
+            })
+        })
 
-  req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": { } }')
+        req.on('error', (e) => {
+          console.log("Erro: " + e.message)
+        })
 
-  // for PATCH only
-  //req.write('[{"op":"add", "path":"/'+ request.body.Username +'", "value":"'+ request.body.Password +'"}]')
-  req.end();
-  response.json({
-    sucess: true,
-  })
+        req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": { } }')
+
+          // for PATCH only
+          //req.write('[{"op":"add", "path":"/'+ request.body.Username +'", "value":"'+ request.body.Password +'"}]')
+        req.end();
+        response.status(200)
+        response.json({
+          sucess: true,
+          message: ''
+        })
+      }
+      if(eon){
+        console.log("Username Exists already.")
+        response.status(409)
+        response.json({
+          sucess: false,
+          message: 'Username already taken!'
+        })
+      }
+    })
 });
 
 // Image replies

@@ -102,6 +102,7 @@ class Login extends React.Component{
       //Auth.logout()
       this.props.history.replace('/signUP');
     };
+    
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 

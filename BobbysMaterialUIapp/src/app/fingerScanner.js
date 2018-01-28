@@ -98,6 +98,8 @@ class fingerScanner extends React.Component{
         this.state = {
             username: '',
             password: '',
+            usernameError: '',
+            passwordError: '',
             formErrors: {email: '', password: ''},
             emailValid: false,
             passwordValid: false,
@@ -151,7 +153,7 @@ class fingerScanner extends React.Component{
 
                         <TextField
                             hintText="Username"
-                            errorText=""
+                            errorText={this.state.usernameError}
                             floatingLabelText="Enter super secret username"
                             value={this.state.username}
                             onChange={this.handleUserNameChange}
@@ -159,7 +161,7 @@ class fingerScanner extends React.Component{
                         <TextField
                             hintText="Password"
                             type="password"
-                            errorText=""
+                            errorText={this.state.passwordError}
                             floatingLabelText="Enter MEGA secret password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
@@ -231,6 +233,8 @@ class fingerScanner extends React.Component{
     }
 
     handleFormSubmit(e){
+      e.preventDefault();
+
       bcrypt.genSalt(4, (err, salt) => {
         bcrypt.hash(this.state.password, salt, (err, hash) => {
           fetch('http://96.232.94.109:8080/CreateUser', {
@@ -245,7 +249,20 @@ class fingerScanner extends React.Component{
               Password: hash, // bcrypt hash being sent via POST.
             })
           }).then(res =>{
-            // do something with response.
+            console.log(res.statusText)
+            if(res.statusText == "Conflict"){
+              this.setState({
+                username: '',
+                password: '',
+                usernameError: 'Username already taken!',
+                passwordError: ''
+              })
+            }
+            if(res.statusText == "OK"){
+              this.props.history.replace('/');
+            }
+          }).catch(err => {
+            alert(err)
           })
         })
       });
@@ -253,8 +270,10 @@ class fingerScanner extends React.Component{
     }
 
     componentWillMount(){
-        if(this.Auth.loggedIn())
-            this.props.history.replace('/fingerScanner');
+        if(this.Auth.loggedIn()){
+          this.props.history.replace('/signUP');
+        }
+
     }
 }
 
