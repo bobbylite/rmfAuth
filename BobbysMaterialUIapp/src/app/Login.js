@@ -132,7 +132,7 @@ class Login extends React.Component{
                         <br></br>
                         A Bobby Luisi project
                         <br></br>
-                        v2.0.1
+                        v0.2.1
                       </div>
                     </Drawer>
                     <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgMikeHash" />
@@ -224,7 +224,8 @@ class Login extends React.Component{
 
         this.Auth.login(this.state.username,this.state.password)
             .then(res =>{
-               this.props.history.replace('/');
+              //console.log(res)
+              this.props.history.replace('/');
             })
             .catch(err =>{
                 alert(err);

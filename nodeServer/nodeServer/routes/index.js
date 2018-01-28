@@ -147,8 +147,8 @@ function findUser(user, password, passedRes){
             })
         }
         else{
-          console.log("That username doesn't exist")
-          if(i== x.length-1){
+          if(i== x.length-2){
+            console.log("That username doesn't exist")
             passedRes.json({
                 sucess: false,
                 token: null,

@@ -142,7 +142,7 @@ class fingerScanner extends React.Component{
                           <br></br>
                           A Bobby Luisi project
                           <br></br>
-                          v2.0.1
+                          v0.2.1
                         </div>
                       </Drawer>
                     <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgHashMike" />

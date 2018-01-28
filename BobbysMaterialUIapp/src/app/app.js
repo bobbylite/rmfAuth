@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './Main'; // Our custom react component
 import Login from './Login'; // Custom react login component
 import fingerScanner from './fingerScanner'; // Fun fingerPrint scanner idea!
-
+import Analytics from "./analytics";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 // Needed for onTouchTap
@@ -18,5 +18,6 @@ render(<Router>
             <Route path="/" exact component={Main} />
             <Route path="/login" component={Login} />
             <Route path="/signUp" component={fingerScanner} />
-        </div>
+            <Route path="/LitTweets" component={Analytics} />
+      </div>
     </Router>, document.getElementById('app'));

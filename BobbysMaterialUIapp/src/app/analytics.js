@@ -133,7 +133,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-class Main extends Component {
+class Analytics extends Component {
   constructor(props, context) {
     super(props, context);
     this.handleRequestClose2 = this.handleRequestClose2.bind(this);
@@ -265,4 +265,4 @@ class Main extends Component {
 }
 
 //export default Main;
-export default withAuth(Main);
+export default withAuth(Analytics);
