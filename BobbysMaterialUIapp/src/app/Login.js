@@ -88,6 +88,8 @@ class Login extends React.Component{
         this.state = {
             username: '',
             password: '',
+            usernameError: '',
+            passwordError: '',
             formErrors: {email: '', password: ''},
             emailValid: false,
             passwordValid: false,
@@ -141,7 +143,7 @@ class Login extends React.Component{
 
                         <TextField
                             hintText=""
-                            errorText=""
+                            errorText={this.state.usernameError}
                             floatingLabelText="Enter super secret username"
                             value={this.state.username}
                             onChange={this.handleUserNameChange}
@@ -149,7 +151,7 @@ class Login extends React.Component{
                         <TextField
                             hintText=""
                             type="password"
-                            errorText=""
+                            errorText={this.state.passwordError}
                             floatingLabelText="Enter MEGA secret password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
@@ -227,8 +229,13 @@ class Login extends React.Component{
               if(JSON.stringify(res.sucess) == 'false'){
                 this.setState({
                   username: '',
-                  password: ''
+                  password: '',
+                  usernameError: 'Come on... Get it right this time.',
+                  passwordError: 'You can do it!'
                 })
+              }
+              if(JSON.stringify(res.sucess) == 'true'){
+                this.props.history.replace('/');
               }
             })
             .catch(err =>{

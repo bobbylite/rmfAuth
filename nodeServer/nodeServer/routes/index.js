@@ -130,6 +130,7 @@ function findUser(user, password, passedRes){
   promise.then(
     (val) => {
       var x = JSON.parse(val)
+      var sentornot = false
       console.log("Username: " + x[0].content['username'])
       console.log("Number of keys: " + x.length)
       for(var i=0; i< x.length-1; i++){
@@ -138,6 +139,7 @@ function findUser(user, password, passedRes){
           var comparePromise = compare(password, x[i].content['password'])
           comparePromise.then(
             (successData) => {
+              sentornot = true
               logme(successData, passedRes, x[i].content['username'])
             },
             (errorData) => {
@@ -146,14 +148,20 @@ function findUser(user, password, passedRes){
               }
             })
         }
-        else{
-          if(i== x.length-2){
+        else if(x[i].content['username'].toUpperCase() != user.toUpperCase()){ // THIS IS THE PROBLEM RIGHT HERE
+          if(i == x.length-2){
             console.log("That username doesn't exist")
-            passedRes.json({
-                sucess: false,
-                token: null,
-                err: 'Username or password is incorrect'
-            });
+            var comparePromise = compare(password, x[i].content['password'])
+            comparePromise.then(
+              (successData) => {
+                sentornot = true
+                logme(successData, passedRes, x[i].content['username'])
+              },
+              (errorData) => {
+                if(i == x.length-1){
+                  onError(errorData, passedRes)
+                }
+              })
           }
         }
       }
