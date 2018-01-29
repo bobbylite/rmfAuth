@@ -90,7 +90,7 @@ function jsonPatchTweet(username, tweetId){
   var options = {
   hostname: '127.0.0.1',
   port: 4300,
-  path: '/_data/Users/'+ username,
+  path: '/_data/Users/'+ username.toUpperCase(),
   method: 'PATCH',
   headers: {
     'Content-Type': 'application/json',
@@ -259,7 +259,7 @@ router.post('/CreateUser', function(request, response) {
   var options = {
       hostname: '127.0.0.1',
       port: 4300,
-      path: '/_data/Users/' + request.body.Username,
+      path: '/_data/Users/' + request.body.Username.toUpperCase(),
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ router.post('/CreateUser', function(request, response) {
   var checkOptions = {
       hostname: '127.0.0.1',
       port: 4300,
-      path: '/_data/Users/' + request.body.Username,
+      path: '/_data/Users/' + request.body.Username.toUpperCase(),
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',

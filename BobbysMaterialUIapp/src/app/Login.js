@@ -102,7 +102,7 @@ class Login extends React.Component{
       //Auth.logout()
       this.props.history.replace('/signUP');
     };
-    
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
@@ -227,6 +227,7 @@ class Login extends React.Component{
 
         this.Auth.login(this.state.username,this.state.password)
             .then(res =>{
+              console.log("test")
               if(JSON.stringify(res.sucess) == 'false'){
                 this.setState({
                   username: '',
