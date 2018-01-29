@@ -46,7 +46,7 @@ var Twitter = new TwitterPackage(secret);
 /* GET home page. */
 
 router.post('/Message/:React_Message', function(req, res, next) {
-    readDataEngine(req.body.tweet);
+    readDataEngine(req.body.tweet, req.body.Username);
     console.log(req.body); // RECEIVING JSON PACKAGE NOT URL POST incase Mike doesn't like URL params
     console.log(req.params.React_Message); // RECEIVING JSON USING URL PARAMS.
 
@@ -64,7 +64,7 @@ function writeDataEngine(data){
         .then(() => console.log('Written!'));
 }
 
-function readDataEngine(msg){
+function readDataEngine(msg, username){
     var returnParam;
     de.read('factCount')
         .then(function(value){ // DATAENGINE MUST BE RUNNING TO POST. SINGLE POINT OF FAILURE.
@@ -76,14 +76,39 @@ function readDataEngine(msg){
                 if (error) {
                     console.log(error);
                 }
-                //console.log(tweet); // Tweet body.
-                console.log(response.body); // Raw response object.
+                var tweet = JSON.parse(response.body)
+                jsonPatchTweet(username, tweet.id)
             });
 
             writeDataEngine(++returnParam);
         });
     counter = returnParam;
     //console.log("Return Param: " + returnParam)
+}
+
+function jsonPatchTweet(username, tweetId){
+  var options = {
+  hostname: '127.0.0.1',
+  port: 4300,
+  path: '/_data/Users/'+ username,
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    } //headers
+  } //deOptions
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (body) {
+        //console.log('Body: ' + body);
+    });
+  });
+
+  req.on('error', function(e) {
+    console.log('problem with request: ' + e.message);
+  })
+
+  req.write('[{"op":"add", "path":"/Tweets/1", "value":{"TweetId":"'+ tweetId +'"}}]')
+  req.end()
 }
 
 const jwtMW = exjwt({
@@ -288,7 +313,7 @@ router.post('/CreateUser', function(request, response) {
           console.log("Erro: " + e.message)
         })
 
-        req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": { } }')
+        req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": [] }')
 
           // for PATCH only
           //req.write('[{"op":"add", "path":"/'+ request.body.Username +'", "value":"'+ request.body.Password +'"}]')
