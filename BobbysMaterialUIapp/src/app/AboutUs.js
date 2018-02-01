@@ -159,7 +159,6 @@ class AboutUs extends React.Component{
                         </CardMedia>
                         <CardTitle style={style.CardStyle} title="#realMikeFacts" subtitle="Who am I? Why did I create it?" />
                         <CardText>
-                        First you should know a little bit about me.
                         I am an avid surfer, musician, and photographer.  I work professionally as a software engineer in 
                         the broadcast media industry.
                         I grew up in Long Island, New York. 
@@ -171,33 +170,33 @@ class AboutUs extends React.Component{
                         Frank Zappa, Eric Clapton, Tony Iommi, Alan Holdsworth, Jeff Beck, Alex Lifeson.. to name a few.
                         </CardText>
                         <CardText>
-                        Shortly after I had discovered music, I wanted to learn how these fantastic electrical circuits 
+                        I wanted to learn how these fantastic electrical circuits 
                         could make such loud, booming and completely beautiful sounds!  So, I had to learn electronics.  
                         I started modifying amplifiers and guitars to emulate the sounds I heard on my favorite records. 
-                        One of these records: Edgar Winter & Rick Derringer Live in Japan.  I'll never forget JB and I got to
-                        meet ol' Rick Derringer.  So cool!
+                        One of these records: Edgar Winter & Rick Derringer Live in Japan.  
                         </CardText>
                         <CardText>
                         I ended up going to school for Electrical and Computer Engineering. I loved digital design, something
-                        about my brain handled literal logic really well. I also wrote lots of code, took a bunch 
-                        of silly classes and had a pretty average college experience. I didn't love it, so graduation 
-                        couldn't have came soon enough. 
+                        about my brain handles literal logic really well. I also wrote lots of code, and had to take a bunch 
+                        of stupid classes like public speaking. #fdale. 
                         </CardText>
                         <CardText>
-                        I ended up in a really 'funny' place when I got hired full time as a Team Lead in a non-engineering dept. I found myself wanting more.
-                        I tried to speak with the more senior software engineers as often as I could.  Some actually saw me writing small 
-                        code projects for fun during my lunch breaks.  This is when one of these guys asked me if I had ever used
-                        React.js or React-Native?
+                        I ended up in a really 'funny' place when I got hired full time as a Team Lead in a non-engineering department. 
+                        Where was the engineering?  I had to look for it.
+                        Someone from the engineering department actually noticed I was making some nifty Node.js apps, and 
+                        some mobile apps.
+                        He ended up asking me if I had ever used
+                        React.js, Redux or React-Native?
                         </CardText>
                         <CardText>
-                        realMikeFacts started out as a test to see if I could teach myself react and hop into the ever changing 
-                        JavaScript community.  Mike is my best friend.  I don't think I know anyone who could care less 
-                        about a web application being about them haha! 
+                        realMikeFacts started out as a test to see if I could teach myself react and hop into that crazy fun 
+                        JavaScript community. Mike... lol. 
                         </CardText>
                         <CardText>
                         Mike works at starbucks... But at night he is a vigilante black hat hacker.  Things got interesting
-                        when he began egging me on to 'up the security' and when he started pointing out 'vulns' as he calls them.
-                        This made me want to be a better developer.  It became something fun to talk about.
+                        when he began egging me on to 'up the security' and started pointing out 'vulns' as he calls them.
+                        This made me want to be a better developer.  It became something fun to talk about. Which lead me to be
+                        the life of every party. 😎
                         </CardText>
                         <CardText>
                         So, I will continue to slowly improve the performance, security and scalability of the applicaiton.  But
