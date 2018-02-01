@@ -172,8 +172,8 @@ class AboutUs extends React.Component{
                         <CardText>
                         I wanted to learn how these fantastic electrical circuits 
                         could make such loud, booming and completely beautiful sounds!  So, I had to learn electronics.  
-                        I started modifying amplifiers and guitars to emulate the sounds I heard on my favorite records. 
-                        One of these records: Edgar Winter & Rick Derringer Live in Japan.  
+                        I started modifying amplifiers and guitars to emulate the sounds I heard on my favorite albums. 
+                        Example: Edgar Winter & Rick Derringer Live in Japan.  (My b.c rich bich guitar)
                         </CardText>
                         <CardText>
                         I ended up going to school for Electrical and Computer Engineering. I loved digital design, something
@@ -189,14 +189,24 @@ class AboutUs extends React.Component{
                         React.js, Redux or React-Native?
                         </CardText>
                         <CardText>
-                        realMikeFacts started out as a test to see if I could teach myself react and hop into that crazy fun 
-                        JavaScript community. Mike... lol. 
+                        realMikeFacts started out as a test to see if I could teach myself React and Redux. Just hopped into that crazy fun 
+                        JavaScript community.  
                         </CardText>
                         <CardText>
                         Mike works at starbucks... But at night he is a vigilante black hat hacker.  Things got interesting
                         when he began egging me on to 'up the security' and started pointing out 'vulns' as he calls them.
                         This made me want to be a better developer.  It became something fun to talk about. Which lead me to be
                         the life of every party. 😎
+                        </CardText>
+                        <CardText>
+                        So, about the app!  The front end is all Reactjs.  I used Google's 'Material Design' libraries in my components.
+                        Using JSX is really quick and easy.  For state management I'm using Redux.  The back end is really interesting.
+                        I used the Express Node.js framework for a server applicaiton. I created a realMikeFacts twitter application so that 
+                        the realMikeFacts back end can use the Twitter API.  
+                         I also wrote a realMikeFacts REST API for this server application 
+                        but the fun part was learning how to write it asynchroneously.  So, the React front end is using 
+                        The realMikeFacts back end REST API to manage multiple JSON databases while sending tweets through
+                        the UI. 
                         </CardText>
                         <CardText>
                         So, I will continue to slowly improve the performance, security and scalability of the applicaiton.  But
