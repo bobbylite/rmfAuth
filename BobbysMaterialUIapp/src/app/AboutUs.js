@@ -147,7 +147,7 @@ class AboutUs extends React.Component{
                     <Card style={style.LogoStyle}>
                         <CardHeader
                         style={style.CardStyle}
-                        title="About Me"
+                        title="About Us"
                         subtitle="The Developer: Bobby"
                         avatar="https://lh3.googleusercontent.com/-M6xWYF_ISNQ/WURmOOoiOaI/AAAAAAAAAFw/_pr0vRuGPiIwKE9mPDByNGhA5VEqYBtYgCEwYBhgL/w140-h139-p/IMG_1672.JPG"
                         />
