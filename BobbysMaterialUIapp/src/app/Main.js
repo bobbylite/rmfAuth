@@ -176,6 +176,10 @@ class Main extends Component {
       this.props.history.replace('/login');
     };
 
+    handleAboutUs = () => {
+      this.props.history.replace('/AboutMe');
+    }
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
@@ -225,7 +229,7 @@ class Main extends Component {
             <br></br>
             <MenuItem onClick={this.handleMenuClose}>Home</MenuItem>
             <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
-            <MenuItem onClick={this.handleClose}>About Us</MenuItem>
+            <MenuItem onClick={this.handleAboutUs}>About Us</MenuItem>
             <MenuItem onClick={this.handleLogout.bind(this)}><Logout style={styles.logoutIcon}/>Logout</MenuItem>
             <div style={styles.credits}>
             <br></br>

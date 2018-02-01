@@ -112,6 +112,10 @@ class fingerScanner extends React.Component{
       this.props.history.replace('/');
     };
 
+    handleAboutUs = () => {
+      this.props.history.replace('/AboutMe');
+    }
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
@@ -137,7 +141,7 @@ class fingerScanner extends React.Component{
                         <br></br>
                         <MenuItem onClick={this.handleLogout}>Home</MenuItem>
                         <MenuItem onClick={this.handleMenuClose}>Create Account</MenuItem>
-                        <MenuItem onClick={this.handleClose}>About Us</MenuItem>
+                        <MenuItem onClick={this.handleAboutUs}>About Us</MenuItem>
                         <div style={style.credits}>
                         <br></br>
                           realMikeFacts.com
@@ -163,6 +167,14 @@ class fingerScanner extends React.Component{
                             type="password"
                             errorText={this.state.passwordError}
                             floatingLabelText="Enter MEGA secret password"
+                            value={this.state.password}
+                            onChange={this.handlePasswordChange}
+                        /><br />
+                        <TextField
+                            hintText="Re-Type Password"
+                            type="password"
+                            errorText={this.state.passwordError}
+                            floatingLabelText="Re-Type MEGA secret password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
                         /><br />

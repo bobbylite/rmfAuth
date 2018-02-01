@@ -141,13 +141,47 @@ class Analytics extends Component {
     this.handleTouchTap2 = this.handleTouchTap2.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
 
-
     this.state = {
       open: false, // This is the draw being opened or not.
       open2: false, // must change this name.
       tweetValue: '',
       un: localStorage.id_username
     };
+
+    console.log("Starting request");
+    this.fetch('http://96.232.94.109:8080/Data' + this.state.tweetValue, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        Username: this.state.un, // This is a test to retrieve POST
+      })
+    }).then(res => {
+      console.log(res)
+    })
+
+
+  }
+
+  fetch(url, options) {
+      // performs api calls sending the required authentication headers
+      const headers = {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }
+
+      // Setting Authorization header
+      // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
+
+      return fetch(url, {
+          headers,
+          ...options
+      })
+          .then(this._checkStatus)
+          .then(response => response.json())
   }
 
   handleTextFieldChange = (e) => {
@@ -236,28 +270,7 @@ class Analytics extends Component {
               v0.2.1
             </div>
           </Drawer>
-          <Dialog
-            open={this.state.open2}
-            title="Almost there..."
-            actions={standardActions2}
-            onRequestClose={this.handleRequestClose2}
-          >
-          <p>@RealMikeFacts   {this.state.tweetValue} #realmikefacts</p>
-          </Dialog>
-          <Img style={styles.LogoStyle} src="http://realmikefacts.com:8080/imgLogo" />
-          <h1 style={styles.container}> #realMikeFacts</h1>
-          <h3>Welcome back, {this.state.un}!</h3>
-          <TextField
-            hintText="Fact About Mike"
-            value={this.state.tweetValue}
-            onChange={this.handleTextFieldChange}
-            multiLine={true}
-          />
-          <FloatingActionButton style={styleAction}
-            onTouchTap={this.handleTouchTap2}
-          >
-          <Img style={styles.imgStyle} src="http://realmikefacts.com:8080/imgMike" />
-          </FloatingActionButton>
+
         </div>
       </MuiThemeProvider>
     );

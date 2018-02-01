@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './Main'; // Our custom react component
 import Login from './Login'; // Custom react login component
 import fingerScanner from './fingerScanner'; // Fun fingerPrint scanner idea!
+import AboutUs from './AboutUs';
 import Analytics from "./analytics";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -19,5 +20,6 @@ render(<Router>
             <Route path="/login" component={Login} />
             <Route path="/signUp" component={fingerScanner} />
             <Route path="/LitTweets" component={Analytics} />
+            <Route path="/AboutMe" component={AboutUs} />
       </div>
     </Router>, document.getElementById('app'));

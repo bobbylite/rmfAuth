@@ -18,6 +18,7 @@ import Foot from './Foot';
 import Img from 'react-image';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import MenuItem from 'material-ui/MenuItem';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 const style = {
     margin: 12,
@@ -29,7 +30,7 @@ const style = {
       textAlign: 'center',
       paddingTop: 0,
       marginTop: 0,
-      zIndex: 1,
+      zIndex: 10,
     },
     title: {
         textAlign: 'center',
@@ -38,13 +39,14 @@ const style = {
     top: {
         textAlign: 'center',
         paddingTop: 0,
-        marginTop: 0,
+        marginTop: 2,
     },
     LogoStyle: {
-        margin: 0,
-        height: 200,
-        position: 'center',
-        paddingTop: -50,
+        marginTop: 10,
+        zIndex: 1
+    },
+    CardStyle: {
+        zIndex: 0
     },
     menuButton: {
     margin: 0,
@@ -77,7 +79,7 @@ const muiTheme = getMuiTheme({
 
 
 
-class Login extends React.Component{
+class AboutUs extends React.Component{
     constructor(){
         super()
         this.handleChange = this.handleChange.bind(this);
@@ -103,8 +105,8 @@ class Login extends React.Component{
       this.props.history.replace('/signUP');
     };
 
-    handleAboutUs = () => {
-      this.props.history.replace('/AboutMe');
+    handleHome = () => {
+      this.props.history.replace('/');
     }
 
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
@@ -130,9 +132,9 @@ class Login extends React.Component{
                       <br></br>
                       <br></br>
                       <br></br>
-                      <MenuItem onClick={this.handleMenuClose}>Home</MenuItem>
+                      <MenuItem onClick={this.handleHome}>Home</MenuItem>
                       <MenuItem onClick={this.handleSignUp}>Create Account</MenuItem>
-                      <MenuItem onClick={this.handleAboutUs}>About Us</MenuItem>
+                      <MenuItem onClick={this.handleClose}>About Us</MenuItem>
                       <div style={style.credits}>
                       <br></br>
                         realMikeFacts.com
@@ -142,34 +144,75 @@ class Login extends React.Component{
                         v0.2.1
                       </div>
                     </Drawer>
-                    <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgMikeHash" />
-                    <h1 style={style.title}>Login to #realMikeFacts</h1>
-                    <form onSubmit={this.handleFormSubmit}>
-
-                        <TextField
-                            hintText=""
-                            errorText={this.state.usernameError}
-                            floatingLabelText="Enter super secret username"
-                            value={this.state.username}
-                            onChange={this.handleUserNameChange}
-                        /><br/>
-                        <TextField
-                            hintText=""
-                            type="password"
-                            errorText={this.state.passwordError}
-                            floatingLabelText="Enter MEGA secret password"
-                            value={this.state.password}
-                            onChange={this.handlePasswordChange}
-                        /><br />
-                        <RaisedButton
-                            style={style.button}
-                            type="submit"
-                            label="Login"
-                            disabled={!this.state.formValid}
-                            secondary={true}
-                            style={style}
+                    <Card style={style.LogoStyle}>
+                        <CardHeader
+                        style={style.CardStyle}
+                        title="About Me"
+                        subtitle="The Developer: Bobby"
+                        avatar="https://lh3.googleusercontent.com/-M6xWYF_ISNQ/WURmOOoiOaI/AAAAAAAAAFw/_pr0vRuGPiIwKE9mPDByNGhA5VEqYBtYgCEwYBhgL/w140-h139-p/IMG_1672.JPG"
                         />
-                    </form>
+                        <CardMedia
+                        style={style.CardStyle}
+                        overlay={<CardTitle subtitle="Long Island, NY" />}
+                        >
+                        <img style={style.CardStyle} src="https://raw.githubusercontent.com/bobby3501/ConsiliTechSolutions/master/views/img/OpenOcean2.jpg" alt="" />
+                        </CardMedia>
+                        <CardTitle style={style.CardStyle} title="#realMikeFacts" subtitle="Who am I? Why did I create it?" />
+                        <CardText>
+                        First you should know a little bit about me.
+                        I am an avid surfer, musician, and photographer.  I work professionally as a software engineer in 
+                        the broadcast media industry.
+                        I grew up in Long Island, New York. 
+                        </CardText>
+                        <CardText>
+                        When I was about 14 I fell in love with music, specifically the guitar.  I had a couple of different bands and met 
+                        many musicians, some 'Genius' musicians along the way. 
+                        I love all the greats and I have plenty of that oozy bluesy soul. Influences: Jimi Hendrix, Led Zeppelin, 
+                        Frank Zappa, Eric Clapton, Tony Iommi, Alan Holdsworth, Jeff Beck, Alex Lifeson.. to name a few.
+                        </CardText>
+                        <CardText>
+                        Shortly after I had discovered music, I wanted to learn how these fantastic electrical circuits 
+                        could make such loud, booming and completely beautiful sounds!  So, I had to learn electronics.  
+                        I started modifying amplifiers and guitars to emulate the sounds I heard on my favorite records. 
+                        One of these records: Edgar Winter & Rick Derringer Live in Japan.  I'll never forget JB and I got to
+                        meet ol' Rick Derringer.  So cool!
+                        </CardText>
+                        <CardText>
+                        I ended up going to school for Electrical and Computer Engineering. I loved digital design, something
+                        about my brain handled literal logic really well. I also wrote lots of code, took a bunch 
+                        of silly classes and had a pretty average college experience. I didn't love it, so graduation 
+                        couldn't have came soon enough. 
+                        </CardText>
+                        <CardText>
+                        I ended up in a really 'funny' place when I got hired full time as a Team Lead in a non-engineering dept. I found myself wanting more.
+                        I tried to speak with the more senior software engineers as often as I could.  Some actually saw me writing small 
+                        code projects for fun during my lunch breaks.  This is when one of these guys asked me if I had ever used
+                        React.js or React-Native?
+                        </CardText>
+                        <CardText>
+                        realMikeFacts started out as a test to see if I could teach myself react and hop into the ever changing 
+                        JavaScript community.  Mike is my best friend.  I don't think I know anyone who could care less 
+                        about a web application being about them haha! 
+                        </CardText>
+                        <CardText>
+                        Mike works at starbucks... But at night he is a vigilante black hat hacker.  Things got interesting
+                        when he began egging me on to 'up the security' and when he started pointing out 'vulns' as he calls them.
+                        This made me want to be a better developer.  It became something fun to talk about.
+                        </CardText>
+                        <CardText>
+                        So, I will continue to slowly improve the performance, security and scalability of the applicaiton.  But
+                        Not because I like ripping on Mike, or because I like twitter.  It's genuinely because 
+                        coding and learning to code has been, and will always be one of the many things I love to do!
+                        This is really just the aftermath of someone asking me a simple question about something I'm passionate about.
+                        </CardText>
+                        <CardText>
+                        PS: Thanks for making me finally create this Felicia! 😉
+                        </CardText>
+                        <CardActions>
+                            {/*<FlatButton label="Action1" />
+                        <FlatButton label="Action2" /> */}
+                        </CardActions>
+                    </Card>
                 </div>
             </MuiThemeProvider>
         )
@@ -249,9 +292,7 @@ class Login extends React.Component{
             })
     }
     componentWillMount(){
-        if(this.Auth.loggedIn())
-            this.props.history.replace('/');
     }
 }
 
-export default Login;
+export default AboutUs;

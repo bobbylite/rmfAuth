@@ -36,7 +36,7 @@ const styles = {
 const AppBarFacts = () => (
   <AppBar
     title={'#realMikeFacts'}
-    style={{position: 'fixed', backgroundColor: '#BA1313', opacity: 0.8, top: 0, left: 0, zIndex: 0}}
+    style={{position: 'fixed', backgroundColor: '#BA1313', opacity: 0.8, top: 0, left: 0, zIndex: 1}}
     showMenuIconButton={false}
   >
   </AppBar>

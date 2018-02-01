@@ -166,6 +166,7 @@ function findUser(user, password, passedRes){
             (successData) => {
               sentornot = true
               logme(successData, passedRes, x[i].content['username'])
+
             },
             (errorData) => {
               if(i == x.length-1){
@@ -173,7 +174,7 @@ function findUser(user, password, passedRes){
               }
             })
         }
-        else if(x[i].content['username'].toUpperCase() != user.toUpperCase()){ // THIS IS THE PROBLEM RIGHT HERE
+        else if(x[i].content['username'].toUpperCase() != user.toUpperCase() && i == x.length-2){ // THIS IS THE PROBLEM RIGHT HERE
           if(i == x.length-2){
             console.log("That username doesn't exist")
             var comparePromise = compare(password, x[i].content['password'])
@@ -186,7 +187,10 @@ function findUser(user, password, passedRes){
                 if(i == x.length-1){
                   onError(errorData, passedRes)
                 }
-              })
+              }).catch(
+                (err) => {
+                }
+              )
           }
         }
       }
@@ -313,7 +317,7 @@ router.post('/CreateUser', function(request, response) {
           console.log("Erro: " + e.message)
         })
 
-        req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": [] }')
+        req.write('{ "id": "0","username": "' + request.body.Username +'", "password": "' + request.body.Password +'", "attempts": 1, "Tweets": [{"TweetId": "Initialize"}] }')
 
           // for PATCH only
           //req.write('[{"op":"add", "path":"/'+ request.body.Username +'", "value":"'+ request.body.Password +'"}]')
@@ -334,6 +338,70 @@ router.post('/CreateUser', function(request, response) {
       }
     })
 });
+
+router.post('/Data', (request, response) => {
+  var tweetGroup = []
+  var options = {
+      hostname: '127.0.0.1',
+      port: 4300,
+      path: '/_data/Users/' + request.body.Username.toUpperCase(),
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      }
+  };
+  let promise = new Promise(
+    (resolve, reject) => {
+      var getTweetIds = http.request(options, (deRes) =>{
+        deRes.setEncoding('utf8');
+        deRes.on('data', (body) => {
+          var DataEngineResponse = JSON.parse(body)
+          for(var i = 0; i < DataEngineResponse.Tweets.length; i++){
+            tweetGroup.push(DataEngineResponse.Tweets[i].TweetId)
+          }
+          resolve(tweetGroup)
+        })
+        deRes.on('error', (err) => {
+          console.log(err)
+        })
+      })
+      getTweetIds.end()
+    })
+  promise.then(
+    (tweetGroup) =>{
+      console.log(tweetGroup)
+
+      Twitter.post('insights/engagement/totals/',  {
+    "tweet_ids": [
+      "957798912886235100"
+    ],
+      "engagement_types": [
+        "impressions",
+        "engagements",
+        "favorites"
+    ],
+    "groupings": {
+      "grouping name": {
+        "group_by": [
+          "tweet.id",
+          "engagement.type"
+        ]
+      }
+    }
+  }, function(error, tweets, tweetResponse) {
+          if (error) {
+              console.log(error);
+          }
+          response.status(200)
+          response.json(tweets)
+          console.log(tweets)
+
+      });
+
+    })
+
+})
 
 // Image replies
 router.get('/imgLogo', function(req, res){
