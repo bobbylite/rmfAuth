@@ -22,7 +22,7 @@ const config = {
         },
         hot: true, // Live-reload
         inline: true,
-        port: 80, // Port Number
+        port: 8081, // Port Number
         host: '0.0.0.0', // Change to '0.0.0.0' for external facing server
         disableHostCheck: true,
         historyApiFallback: true,

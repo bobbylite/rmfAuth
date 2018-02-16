@@ -186,10 +186,10 @@ class AboutUs extends React.Component{
                         Someone from the engineering department actually noticed I was making some nifty Node.js apps, and 
                         some mobile apps.
                         He ended up asking me if I had ever used
-                        React.js, Redux or React-Native?
+                        React.js or React-Native.
                         </CardText>
                         <CardText>
-                        realMikeFacts started out as a test to see if I could teach myself React and Redux. Just hopped into that crazy fun 
+                        realMikeFacts started out as a test to see if I could teach myself React. Just hopped into that crazy fun 
                         JavaScript community.  
                         </CardText>
                         <CardText>
@@ -200,7 +200,7 @@ class AboutUs extends React.Component{
                         </CardText>
                         <CardText>
                         So, about the app!  The front end is all Reactjs.  I used Google's 'Material Design' libraries in my components.
-                        Using JSX is really quick and easy.  For state management I'm using Redux.  The back end is really interesting.
+                        Using JSX is really quick and easy.  For state management I'm using React router.  The back end is really interesting.
                         I used the Express Node.js framework for a server applicaiton. I created a realMikeFacts twitter application so that 
                         the realMikeFacts back end can use the Twitter API.  
                          I also wrote a realMikeFacts REST API for this server application 
