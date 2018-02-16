@@ -16,6 +16,7 @@ import TextField from 'material-ui/TextField';
 import AppBarFacts from './appBar';
 import Foot from './Foot';
 import Img from 'react-image';
+import FileUploadIcon from 'material-ui/svg-icons/file/file-upload';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -66,6 +67,15 @@ const style = {
       position: 'fixed',
       bottom: 10,
       left: 60
+    },
+    imagePreview: {
+        borderRadius: 8,
+        height: 100,
+        width: 100,
+        position: 'center'
+    },
+    icon: {
+        display: 'none'
     }
 };
 
@@ -83,6 +93,7 @@ class Login extends React.Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleImageChange = this.handleImageChange.bind(this);
         this.Auth = new AuthService();
 
         this.state = {
@@ -93,7 +104,9 @@ class Login extends React.Component{
             formErrors: {email: '', password: ''},
             emailValid: false,
             passwordValid: false,
-            formValid: false
+            formValid: false,
+            file: '',
+            imagePreviewUrl: ''
 
         };
     }
@@ -107,10 +120,31 @@ class Login extends React.Component{
       this.props.history.replace('/AboutMe');
     }
 
+    handleImageChange = (e) => {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+    
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        }
+    
+        reader.readAsDataURL(file)
+    }
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
     render(){
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+          $imagePreview = (<img style={style.imagePreview} src={imagePreviewUrl} />);
+        }
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={style.center} >
@@ -144,8 +178,12 @@ class Login extends React.Component{
                     </Drawer>
                     <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgMikeHash" />
                     <h1 style={style.title}>Login to #realMikeFacts</h1>
-                    <form onSubmit={this.handleFormSubmit}>
-
+                    <form onSubmit={this.handleFormSubmit}><br/>
+                        <input 
+                        type="file" 
+                        onChange={this.handleImageChange} 
+                        ></input><br/>
+                        {$imagePreview}<br/>
                         <TextField
                             hintText=""
                             errorText={this.state.usernameError}
