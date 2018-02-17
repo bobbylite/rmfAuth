@@ -77,6 +77,7 @@ function readDataEngine(msg, username){
                     console.log(error);
                 }
                 var tweet = JSON.parse(response.body)
+                console.log(tweet)
                 jsonPatchTweet(username, tweet.id)
             });
 
@@ -372,24 +373,7 @@ router.post('/Data', (request, response) => {
     (tweetGroup) =>{
       console.log(tweetGroup)
 
-      Twitter.post('insights/engagement/totals/',  {
-    "tweet_ids": [
-      "957798912886235100"
-    ],
-      "engagement_types": [
-        "impressions",
-        "engagements",
-        "favorites"
-    ],
-    "groupings": {
-      "grouping name": {
-        "group_by": [
-          "tweet.id",
-          "engagement.type"
-        ]
-      }
-    }
-  }, function(error, tweets, tweetResponse) {
+      Twitter.get('statuses/show/964728614125232129', function(error, tweets, tweetResponse) {
           if (error) {
               console.log(error);
           }
