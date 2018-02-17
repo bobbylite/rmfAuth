@@ -77,8 +77,8 @@ function readDataEngine(msg, username){
                     console.log(error);
                 }
                 var tweet = JSON.parse(response.body)
-                console.log(tweet)
-                jsonPatchTweet(username, tweet.id)
+                console.log(tweet.id_str)
+                jsonPatchTweet(username, tweet.id_str)
             });
 
             writeDataEngine(++returnParam);
@@ -373,7 +373,7 @@ router.post('/Data', (request, response) => {
     (tweetGroup) =>{
       console.log(tweetGroup)
 
-      Twitter.get('statuses/show/964728614125232129', function(error, tweets, tweetResponse) {
+      Twitter.get('statuses/show/964733216522457088', function(error, tweets, tweetResponse) {
           if (error) {
               console.log(error);
           }
