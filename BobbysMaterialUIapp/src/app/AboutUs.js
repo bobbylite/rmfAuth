@@ -109,6 +109,10 @@ class AboutUs extends React.Component{
       this.props.history.replace('/');
     }
 
+    handleLitTweets = () => {
+      this.props.history.replace('/LitTweets');
+    }
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
@@ -133,6 +137,7 @@ class AboutUs extends React.Component{
                       <br></br>
                       <br></br>
                       <MenuItem onClick={this.handleHome}>Home</MenuItem>
+                      <MenuItem onClick={this.handleLitTweets}>@realMikeFacts 🔥lit tweets</MenuItem>
                       <MenuItem onClick={this.handleSignUp}>Create Account</MenuItem>
                       <MenuItem onClick={this.handleClose}>About Us</MenuItem>
                       <div style={style.credits}>

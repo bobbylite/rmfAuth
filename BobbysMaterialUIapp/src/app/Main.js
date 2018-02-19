@@ -140,6 +140,7 @@ class Main extends Component {
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleTouchTap2 = this.handleTouchTap2.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleLitTweets = this.handleLitTweets.bind(this);
 
 
     this.state = {
@@ -178,6 +179,10 @@ class Main extends Component {
 
     handleAboutUs = () => {
       this.props.history.replace('/AboutMe');
+    }
+
+    handleLitTweets = () => {
+      this.props.history.replace('/LitTweets');
     }
 
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
@@ -228,7 +233,7 @@ class Main extends Component {
             <br></br>
             <br></br>
             <MenuItem onClick={this.handleMenuClose}>Home</MenuItem>
-            <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
+            <MenuItem onClick={this.handleLitTweets}>@realMikeFacts 🔥lit tweets</MenuItem>
             <MenuItem onClick={this.handleAboutUs}>About Us</MenuItem>
             <MenuItem onClick={this.handleLogout.bind(this)}><Logout style={styles.logoutIcon}/>Logout</MenuItem>
             <div style={styles.credits}>

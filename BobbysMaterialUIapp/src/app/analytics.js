@@ -102,8 +102,10 @@ const styles = {
     position: 'fixed',
   },
   cardStyle: {
-    paddingTop: 80,
-    marginTop: 10,
+    paddingTop: 10,
+    marginTop: 90,
+    marginBottom: 0,
+    paddingBottom: 0,
     zIndex: 1
   },
    cardStuffStyle: {
@@ -134,7 +136,7 @@ const styles = {
     height: 50,
     marginLeft: 'auto',
     marginRight: 'auto',
-    paddingTop: 100,
+    paddingTop: 50,
   }
 };
 
@@ -151,6 +153,8 @@ class Analytics extends Component {
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleTouchTap2 = this.handleTouchTap2.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleAboutUs = this.handleAboutUs.bind(this);
+    this.handleHome = this.handleHome.bind(this);
 
     this.state = {
       open: false, // This is the draw being opened or not.
@@ -236,6 +240,14 @@ class Analytics extends Component {
       this.props.history.replace('/login');
     };
 
+    handleAboutUs = () => {
+      this.props.history.replace('/AboutMe');
+    }
+
+    handleHome = () => {
+      this.props.history.replace('/');
+    }
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
@@ -288,9 +300,9 @@ class Analytics extends Component {
             <br></br>
             <br></br>
             <br></br>
-            <MenuItem onClick={this.handleMenuClose}>Home</MenuItem>
-            <MenuItem onClick={this.handleClose}>@realMikeFacts 🔥lit tweets</MenuItem>
-            <MenuItem onClick={this.handleClose}>About Us</MenuItem>
+            <MenuItem onClick={this.handleHome}>Home</MenuItem>
+            <MenuItem onClick={this.handleMenuClose}>@realMikeFacts 🔥lit tweets</MenuItem>
+            <MenuItem onClick={this.handleAboutUs}>About Us</MenuItem>
             <MenuItem onClick={this.handleLogout.bind(this)}><Logout style={styles.logoutIcon}/>Logout</MenuItem>
             <div style={styles.credits}>
             <br></br>
