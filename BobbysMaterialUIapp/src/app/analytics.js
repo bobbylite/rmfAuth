@@ -24,6 +24,9 @@ import Foot from './Foot';
 import AuthService from './AuthService';
 import withAuth from './withAuth';
 import Img from 'react-image';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'Recharts';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 const Auth = new AuthService();
 
@@ -98,11 +101,13 @@ const styles = {
     color: '#e74c3c',
     position: 'fixed',
   },
-  LogoStyle: {
-    margin: 0,
-    height: 150,
-    position: 'center',
+  cardStyle: {
     paddingTop: 80,
+    marginTop: 10,
+    zIndex: 1
+  },
+   cardStuffStyle: {
+    zIndex: 1
   },
     menuButton: {
     margin: 0,
@@ -124,6 +129,12 @@ const styles = {
     position: 'fixed',
     bottom: 10,
     left: 60
+  }, 
+  graph: {
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingTop: 100,
   }
 };
 
@@ -145,7 +156,11 @@ class Analytics extends Component {
       open: false, // This is the draw being opened or not.
       open2: false, // must change this name.
       tweetValue: '',
-      un: localStorage.id_username
+      un: localStorage.id_username,
+      favCount: 1,
+      retweetCount: 0, 
+      tweetDate: '',
+      tweetText: ''
     };
 
     console.log("Starting request");
@@ -161,6 +176,17 @@ class Analytics extends Component {
       })
     }).then(res => {
       console.log(res)
+      console.log(res.created_at)
+      console.log(res.favorite_count)
+      console.log(res.retweet_count)
+      console.log(res.text)
+
+      this.setState({
+        favCount: res.favorite_count,
+        retweetCount: res.retweet_count, 
+        tweetDate: res.created_at, 
+        tweetText: res.text
+      })
     })
 
 
@@ -227,6 +253,7 @@ class Analytics extends Component {
       })
     })
   }
+
   render() {
     const standardActions2 = (
       // Make the text field blank on submission
@@ -237,6 +264,10 @@ class Analytics extends Component {
         onTouchTap={this.handleRequestClose2}
       />
     );
+
+      const data = [
+        {name: this.state.tweetDate, Retweets: this.state.retweetCount, Likes: this.state.favCount},
+      ];
 
    return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -270,7 +301,29 @@ class Analytics extends Component {
               v0.2.1
             </div>
           </Drawer>
-
+          <Card style={styles.cardStyle}>
+            <CardHeader
+              style={styles.CardStuffStyle}
+              title="Selected Tweet"
+              subtitle={this.state.tweetText}
+              avatar="http://realmikefacts.com:8080/imgMike"
+              />
+          </Card>
+          <BarChart 
+            width={350} 
+            height={300} 
+            data={data}
+            margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            style={styles.graph}
+          >
+            <XAxis dataKey="name"/>
+            <YAxis/>
+            <CartesianGrid strokeDasharray="3 3"/>
+            <Tooltip/>
+            <Legend />
+            <Bar dataKey="Likes" fill="#8884d8" />
+            <Bar dataKey="Retweets" fill="#82ca9d" />
+          </BarChart>
         </div>
       </MuiThemeProvider>
     );

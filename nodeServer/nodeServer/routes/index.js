@@ -372,8 +372,8 @@ router.post('/Data', (request, response) => {
   promise.then(
     (tweetGroup) =>{
       console.log(tweetGroup)
-
-      Twitter.get('statuses/show/964733216522457088', function(error, tweets, tweetResponse) {
+      // put the id_str in this parameratized url RESTful get. LOL DOPE. 
+      Twitter.get('statuses/show/' + tweetGroup[0], function(error, tweets, tweetResponse) {
           if (error) {
               console.log(error);
           }
