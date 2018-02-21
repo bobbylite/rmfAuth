@@ -166,6 +166,14 @@ class Main extends Component {
     });
   }
 
+    handleRequestClose = () => {
+
+    this.setState({
+      open2: false,
+      tweetValue: '',
+    });
+  }
+
     handleTouchTap2 = () => {
     this.setState({
       open2: true,
@@ -205,12 +213,19 @@ class Main extends Component {
   render() {
     const standardActions2 = (
       // Make the text field blank on submission
-
+      <div>
       <FlatButton
         label="Send!"
         primary={true}
         onTouchTap={this.handleRequestClose2}
       />
+
+      <FlatButton
+        label="Cancel"
+        primary={false}
+        onTouchTap={this.handleRequestClose}
+      />
+      </div>
     );
 
    return (

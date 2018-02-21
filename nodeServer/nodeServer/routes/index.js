@@ -369,11 +369,12 @@ router.post('/Data', (request, response) => {
       })
       getTweetIds.end()
     })
+    
   promise.then(
     (tweetGroup) =>{
       console.log(tweetGroup)
       // put the id_str in this parameratized url RESTful get. LOL DOPE. 
-      Twitter.get('statuses/show/' + tweetGroup[0], function(error, tweets, tweetResponse) {
+      Twitter.get('statuses/show/' + tweetGroup[1], function(error, tweets, tweetResponse) {
           if (error) {
               console.log(error);
           }
@@ -406,6 +407,10 @@ router.get('/imgBanner', function(req, res){
 
 router.get('/imgHashMike', function(req, res){
     res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-2.png')
+});
+
+router.get('/getAnyImage/:img', function(req, res){
+    res.sendFile(__dirname + '/img/' + req.params.img +'.png')
 });
 
 

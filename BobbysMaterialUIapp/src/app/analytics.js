@@ -164,7 +164,9 @@ class Analytics extends Component {
       favCount: 1,
       retweetCount: 0, 
       tweetDate: '',
-      tweetText: ''
+      tweetText: '',
+      expanded: false, 
+      label: 'SHOW'
     };
 
     console.log("Starting request");
@@ -248,6 +250,29 @@ class Analytics extends Component {
       this.props.history.replace('/');
     }
 
+    handleExpand = () => {
+      var toggle = !this.state.expanded
+      console.log(toggle)
+      this.setState({
+        expanded: toggle
+      })
+
+      if(toggle){
+        this.setState({
+          label: 'HIDE'
+        })
+      }
+      if(!toggle){
+        this.setState({
+          label: 'SHOW'
+        })
+      }
+    }
+
+    handleExpandChange = (expanded) => {
+      this.setState({expanded: expanded})
+    }
+
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
 
@@ -313,21 +338,26 @@ class Analytics extends Component {
               v0.2.1
             </div>
           </Drawer>
-          <Card style={styles.cardStyle}>
+          <Card 
+          style={styles.cardStyle} 
+          expanded={this.state.expanded}
+          onExpandChange={this.handleExpandChange}>
             <CardHeader
               style={styles.CardStuffStyle}
               title="Selected Tweet"
               subtitle={this.state.tweetText}
               avatar="http://realmikefacts.com:8080/imgMike"
-              />
-          </Card>
-          <BarChart 
-            width={350} 
-            height={300} 
-            data={data}
-            margin={{top: 5, right: 30, left: 20, bottom: 5}}
-            style={styles.graph}
-          >
+            />
+            <CardActions
+              expandable={true}
+            >
+            <BarChart 
+              width={350} 
+              height={300} 
+              data={data}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              style={styles.graph}
+            >
             <XAxis dataKey="name"/>
             <YAxis/>
             <CartesianGrid strokeDasharray="3 3"/>
@@ -336,6 +366,11 @@ class Analytics extends Component {
             <Bar dataKey="Likes" fill="#8884d8" />
             <Bar dataKey="Retweets" fill="#82ca9d" />
           </BarChart>
+            </CardActions>
+            <CardActions>
+              <FlatButton disableTouchRipple={true} label={this.state.label} onClick={this.handleExpand} />
+            </CardActions>
+          </Card>
         </div>
       </MuiThemeProvider>
     );

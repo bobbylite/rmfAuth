@@ -170,14 +170,6 @@ class fingerScanner extends React.Component{
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
                         /><br />
-                        <TextField
-                            hintText="Re-Type Password"
-                            type="password"
-                            errorText={this.state.passwordError}
-                            floatingLabelText="Re-Type MEGA secret password"
-                            value={this.state.password}
-                            onChange={this.handlePasswordChange}
-                        /><br />
                         <RaisedButton
                             style={style.button}
                             type="submit"
