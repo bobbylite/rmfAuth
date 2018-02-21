@@ -409,8 +409,8 @@ router.get('/imgHashMike', function(req, res){
     res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-2.png')
 });
 
-router.get('/getAnyImage/:img', function(req, res){
-    res.sendFile(__dirname + '/img/' + req.params.img +'.png')
+router.get('/getImage/:imgName', function(req, res){
+    res.sendFile(__dirname + '/img/' + req.params.imgName + '.png')
 });
 
 

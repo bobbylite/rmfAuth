@@ -136,7 +136,7 @@ const styles = {
     height: 50,
     marginLeft: 'auto',
     marginRight: 'auto',
-    paddingTop: 50,
+    paddingTop: 5,
   }
 };
 
