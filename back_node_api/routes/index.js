@@ -378,12 +378,11 @@ router.post('/Data', (request, response) => {
           if (error) {
               console.log(error);
           }
+            
           response.status(200)
           response.json(tweets)
           console.log(tweets)
-
       });
-
     })
 
 })

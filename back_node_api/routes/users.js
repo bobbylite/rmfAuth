@@ -1,9 +1,10 @@
 var express = require('express');
+
 var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+ res.render('error', {message: 'Welcome to the realmikefacts API'})
 });
 
 module.exports = router;
