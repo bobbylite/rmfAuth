@@ -70,9 +70,11 @@ const style = {
     },
     imagePreview: {
         borderRadius: 8,
-        height: 100,
+        height: 'auto',
         width: 100,
-        position: 'center'
+        position: 'center',
+        marginLeft: 250, 
+        marginRight: 'auto'
     },
     icon: {
         display: 'none'
@@ -94,6 +96,7 @@ class Login extends React.Component{
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
+        this.handleDialogClose = this.handleDialogClose.bind(this);
         this.Auth = new AuthService();
 
         this.state = {
@@ -106,7 +109,8 @@ class Login extends React.Component{
             passwordValid: false,
             formValid: false,
             file: '',
-            imagePreviewUrl: ''
+            imagePreviewUrl: '',
+            dopen: true
 
         };
     }
@@ -123,6 +127,8 @@ class Login extends React.Component{
     handleImageChange = (e) => {
         e.preventDefault();
 
+        this.setState({dopen: true})
+
         let reader = new FileReader();
         let file = e.target.files[0];
     
@@ -138,12 +144,24 @@ class Login extends React.Component{
 
     handleMenuOpen = () => {this.setState({open: !this.state.open})};
     handleMenuClose = () => {this.setState({open: false})};
+    handleDialogClose = () => {this.setState({dopen: !this.state.dopen})};
 
     render(){
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-          $imagePreview = (<img style={style.imagePreview} src={imagePreviewUrl} />);
+            // then setup a dope google card to display this dope image. maybe? 
+            $imagePreview = (
+                <Dialog
+                //actions={actions}
+                //modal={true}
+                open={this.state.dopen}
+                onRequestClose={this.handleDialogClose.bind(this)}
+              >
+                <img style={style.imagePreview} src={imagePreviewUrl} />
+              </Dialog>
+            );
+
         }
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -180,7 +198,7 @@ class Login extends React.Component{
                     <h1 style={style.title}>Login to #realMikeFacts</h1>
                     <form onSubmit={this.handleFormSubmit}><br/>
                         <input 
-                        type="file" 
+                        type="file"
                         onChange={this.handleImageChange} 
                         ></input><br/>
                         {$imagePreview}<br/>
