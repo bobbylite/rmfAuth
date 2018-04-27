@@ -21,5 +21,6 @@ render(<Router>
             <Route path="/signUp" component={fingerScanner} />
             <Route path="/LitTweets" component={Analytics} />
             <Route path="/AboutMe" component={AboutUs} />
+            <Route path="/.well-known" component={AboutUs} />
       </div>
     </Router>, document.getElementById('app'));

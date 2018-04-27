@@ -387,6 +387,16 @@ router.post('/Data', (request, response) => {
 
 })
 
+// https challange cert 
+router.get('/.well-known/:key', (req, res) => {
+  console.log(req.params.key)
+  res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-Text.png');
+});
+
+router.get('sockjs-node', (req, res)=>{
+  res.send(req);
+});
+
 // Image replies
 router.get('/imgLogo', function(req, res){
     res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-Text.png');
@@ -411,6 +421,7 @@ router.get('/imgHashMike', function(req, res){
 router.get('/getImage/:imgName', function(req, res){
     res.sendFile(__dirname + '/img/' + req.params.imgName + '.png')
 });
+
 
 
 
