@@ -7,7 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('nodeserver:server');
 var http = require('http');
+var https = require('https');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -25,6 +27,10 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
+const options = {
+  key: fs.readFileSync("./ssl/privkey.pem"),
+  cert: fs.readFileSync("./ssl/fullchain.pem")
+};
 
 var server = http.createServer(app);
 

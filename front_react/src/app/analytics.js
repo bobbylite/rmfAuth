@@ -306,6 +306,46 @@ class Analytics extends Component {
         {name: this.state.tweetDate, Retweets: this.state.retweetCount, Likes: this.state.favCount},
       ];
 
+      var cardHolder = [];
+      for(var i=0;i<35;i++){
+          cardHolder.push(
+              (<Card 
+            key={i.toString()}
+            style={styles.cardStyle} 
+            expanded={this.state.expanded}
+            onExpandChange={this.handleExpandChange}>
+            <CardHeader
+              style={styles.CardStuffStyle}
+              title= {"Selected Tweet" + i} 
+              subtitle={this.state.tweetText}
+              avatar="http://realmikefacts.com:8080/imgMike"
+            />
+            <CardActions
+              expandable={true}
+            >
+            <BarChart 
+              width={350} 
+              height={300} 
+              data={data}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              style={styles.graph}
+            >
+            <XAxis dataKey="name"/>
+            <YAxis/>
+            <CartesianGrid strokeDasharray="3 3"/>
+            <Tooltip/>
+            <Legend />
+            <Bar dataKey="Likes" fill="#8884d8" />
+            <Bar dataKey="Retweets" fill="#82ca9d" />
+          </BarChart>
+            </CardActions>
+            <CardActions>
+              <FlatButton disableTouchRipple={true} label={this.state.label} onClick={this.handleExpand} />
+            </CardActions>
+          </Card>)
+          );  
+      }
+
    return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.center} >
@@ -338,39 +378,7 @@ class Analytics extends Component {
               v0.2.1
             </div>
           </Drawer>
-          <Card 
-          style={styles.cardStyle} 
-          expanded={this.state.expanded}
-          onExpandChange={this.handleExpandChange}>
-            <CardHeader
-              style={styles.CardStuffStyle}
-              title="Selected Tweet"
-              subtitle={this.state.tweetText}
-              avatar="http://realmikefacts.com:8080/imgMike"
-            />
-            <CardActions
-              expandable={true}
-            >
-            <BarChart 
-              width={350} 
-              height={300} 
-              data={data}
-              margin={{top: 5, right: 30, left: 20, bottom: 5}}
-              style={styles.graph}
-            >
-            <XAxis dataKey="name"/>
-            <YAxis/>
-            <CartesianGrid strokeDasharray="3 3"/>
-            <Tooltip/>
-            <Legend />
-            <Bar dataKey="Likes" fill="#8884d8" />
-            <Bar dataKey="Retweets" fill="#82ca9d" />
-          </BarChart>
-            </CardActions>
-            <CardActions>
-              <FlatButton disableTouchRipple={true} label={this.state.label} onClick={this.handleExpand} />
-            </CardActions>
-          </Card>
+          {cardHolder}
         </div>
       </MuiThemeProvider>
     );

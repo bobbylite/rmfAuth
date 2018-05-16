@@ -30,14 +30,14 @@ export default class AuthService {
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage
-        return !!token && !this.isTokenExpired(token) // Logically ANDing the two things 
+        return !!token && !this.isTokenExpired(token) // Logically ANDing the two things
                                                       //needed to find out if the tok is cool.
     }
 
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. 
+            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired.
                 return true;
             }
             else
