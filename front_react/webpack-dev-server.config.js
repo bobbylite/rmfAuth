@@ -7,7 +7,7 @@ const config = {
     entry: {
         main: [
             // only- means to only hot reload for successful updates
-            //'webpack-dev-server/client?http://' + require("ip").address() + ':8081/',
+            'webpack-dev-server/client?http://' + require("ip").address() + ':8081',
             'webpack/hot/only-dev-server',
             './src/app/app.js',
         ],

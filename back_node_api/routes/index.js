@@ -422,7 +422,9 @@ router.get('/getImage/:imgName', function(req, res){
     res.sendFile(__dirname + '/img/' + req.params.imgName + '.png')
 });
 
-
+router.get('/', () => {
+  res.sendFile(__dirname + '/img/Real-Mike-Facts-Logo-2.png')
+});
 
 
 module.exports = router;
