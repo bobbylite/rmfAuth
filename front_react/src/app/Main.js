@@ -197,7 +197,7 @@ class Main extends Component {
     handleMenuClose = () => {this.setState({open: false})};
 
   request = () => {
-    fetch('http://96.232.94.109:8080/Message/' + this.state.tweetValue, {
+    fetch('https://apirmf.com/Message/' + this.state.tweetValue, {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -268,7 +268,7 @@ class Main extends Component {
           >
           <p>@RealMikeFacts   {this.state.tweetValue} #realmikefacts</p>
           </Dialog>
-          <Img style={styles.LogoStyle} src="http://realmikefacts.com:8080/imgLogo" />
+          <Img style={styles.LogoStyle} src="https://apirmf.com/imgLogo" />
           <h1 style={styles.container}> #realMikeFacts</h1>
           <h3>Welcome back, {this.state.un}!</h3>
           <TextField
@@ -280,7 +280,7 @@ class Main extends Component {
           <FloatingActionButton style={styleAction}
             onTouchTap={this.handleTouchTap2}
           >
-          <Img style={styles.imgStyle} src="http://realmikefacts.com:8080/imgMike" />
+          <Img style={styles.imgStyle} src="https://apirmf.com/imgMike" />
           </FloatingActionButton>
         </div>
       </MuiThemeProvider>

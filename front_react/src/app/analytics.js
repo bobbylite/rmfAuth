@@ -170,7 +170,7 @@ class Analytics extends Component {
     };
 
     console.log("Starting request");
-    this.fetch('http://96.232.94.109:8080/Data' + this.state.tweetValue, {
+    this.fetch('https://apirmf.com/Data' + this.state.tweetValue, {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -277,7 +277,7 @@ class Analytics extends Component {
     handleMenuClose = () => {this.setState({open: false})};
 
   request = () => {
-    fetch('http://96.232.94.109:8080/Message/' + this.state.tweetValue, {
+    fetch('https://apirmf.com/Message/' + this.state.tweetValue, {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -318,7 +318,7 @@ class Analytics extends Component {
               style={styles.CardStuffStyle}
               title= {"Selected Tweet" + i} 
               subtitle={this.state.tweetText}
-              avatar="http://realmikefacts.com:8080/imgMike"
+              avatar="https://apirmf.com/imgMike"
             />
             <CardActions
               expandable={true}

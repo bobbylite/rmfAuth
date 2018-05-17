@@ -142,7 +142,7 @@ class Login extends React.Component{
                         v0.2.1
                       </div>
                     </Drawer>
-                    <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgMikeHash" />
+                    <Img style={style.LogoStyle} src="https://apirmf.com/imgMikeHash" />
                     <h1 style={style.title}>Login to #realMikeFacts</h1>
                     <form onSubmit={this.handleFormSubmit}>
 
