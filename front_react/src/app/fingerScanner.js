@@ -151,7 +151,7 @@ class fingerScanner extends React.Component{
                           v0.2.1
                         </div>
                       </Drawer>
-                    <Img style={style.LogoStyle} src="http://realmikefacts.com:8080/imgHashMike" />
+                    <Img style={style.LogoStyle} src="https://apirmf.com/imgHashMike" />
                     <h1 style={style.title}>Sign Up for #realMikeFacts</h1>
                     <form onSubmit={this.handleFormSubmit}>
 
@@ -241,7 +241,7 @@ class fingerScanner extends React.Component{
 
       bcrypt.genSalt(4, (err, salt) => {
         bcrypt.hash(this.state.password, salt, (err, hash) => {
-          fetch('http://96.232.94.109:8080/CreateUser', {
+          fetch('https://apirmf.com/CreateUser', {
             method: 'POST',
             mode: 'cors',
             headers: {
