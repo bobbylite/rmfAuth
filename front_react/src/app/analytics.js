@@ -102,8 +102,8 @@ const styles = {
     position: 'fixed',
   },
   cardStyle: {
-    paddingTop: 10,
-    marginTop: 90,
+    paddingTop: 0,
+    marginTop: 10,
     marginBottom: 0,
     paddingBottom: 0,
     zIndex: 1
@@ -166,10 +166,13 @@ class Analytics extends Component {
       tweetDate: '',
       tweetText: '',
       expanded: false, 
-      label: 'SHOW'
+      label: 'SHOW', 
+      tweetDataArray: []
     };
 
     console.log("Starting request");
+
+
     this.fetch('https://apirmf.com/Data' + this.state.tweetValue, {
       method: 'POST',
       mode: 'cors',
@@ -181,39 +184,34 @@ class Analytics extends Component {
         Username: this.state.un, // This is a test to retrieve POST
       })
     }).then(res => {
-      console.log(res)
-      console.log(res.created_at)
-      console.log(res.favorite_count)
-      console.log(res.retweet_count)
-      console.log(res.text)
+      console.log(res); // List of all tweet analytics per user.
+      for(var i=0;i<res.length;i++){
 
+      }
       this.setState({
+        tweetDataArray: res,
         favCount: res.favorite_count,
         retweetCount: res.retweet_count, 
         tweetDate: res.created_at, 
-        tweetText: res.text
+        tweetText: res.text, 
       })
-    })
+    });
 
 
   }
 
   fetch(url, options) {
-      // performs api calls sending the required authentication headers
       const headers = {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
       }
 
-      // Setting Authorization header
-      // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
-
       return fetch(url, {
           headers,
           ...options
       })
-          .then(this._checkStatus)
-          .then(response => response.json())
+      .then(this._checkStatus)
+      .then(response => response.json())
   }
 
   handleTextFieldChange = (e) => {
@@ -306,18 +304,27 @@ class Analytics extends Component {
         {name: this.state.tweetDate, Retweets: this.state.retweetCount, Likes: this.state.favCount},
       ];
 
-      var cardHolder = [];
-      for(var i=0;i<35;i++){
-          cardHolder.push(
-              (<Card 
+      for(var i=0; i< this.state.tweetDataArray.length;i++){
+        if (!this.state.tweetDataArray[i].text) return;
+        data.push({
+          name: this.state.tweetDataArray[i].text,
+          Retweets: this.state.tweetDataArray[i].retweet_count,
+          Likes:  this.state.tweetDataArray[i].favorite_count,
+          Date: this.state.tweetDataArray[i].created_at,
+          All: this.state.un + "'s Tweets",
+          openclose: false
+        })
+      }
+
+      var AllStatsCard = <Card 
             key={i.toString()}
             style={styles.cardStyle} 
             expanded={this.state.expanded}
             onExpandChange={this.handleExpandChange}>
             <CardHeader
               style={styles.CardStuffStyle}
-              title= {"Selected Tweet" + i} 
-              subtitle={this.state.tweetText}
+              title= {"Historical Tweet Analytics"} 
+              subtitle={"All Tweets"}
               avatar="https://apirmf.com/imgMike"
             />
             <CardActions
@@ -327,6 +334,45 @@ class Analytics extends Component {
               width={350} 
               height={300} 
               data={data}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              style={styles.graph}
+            >
+            <XAxis dataKey="name"/>
+            <YAxis/>
+            <CartesianGrid strokeDasharray="3 3"/>
+            <Tooltip/>
+            <Legend />
+            <Bar dataKey="Likes" fill="#8884d8" />
+            <Bar dataKey="Retweets" fill="#82ca9d" />
+          </BarChart>
+            </CardActions>
+            <CardActions>
+              <FlatButton disableTouchRipple={true} label={this.state.label} onClick={this.handleExpand} />
+            </CardActions>
+          </Card>
+
+      var cardHolder = [];
+      for(var i=1;i<data.length -1;i++){ 
+        console.log(data[i]);
+          cardHolder.push(
+              (<Card 
+            key={i.toString()}
+            style={styles.cardStyle} 
+            expanded={this.state.expanded}
+            onExpandChange={this.handleExpandChange}>
+            <CardHeader
+              style={styles.CardStuffStyle}
+              title= {data[i].Date} 
+              subtitle={data[i].name}
+              avatar="https://apirmf.com/imgMike"
+            />
+            <CardActions
+              expandable={true}
+            >
+            <BarChart 
+              width={350} 
+              height={300} 
+              data={[data[i]]}
               margin={{top: 5, right: 30, left: 20, bottom: 5}}
               style={styles.graph}
             >
@@ -378,6 +424,11 @@ class Analytics extends Component {
               v0.2.1
             </div>
           </Drawer>
+                      <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+          {AllStatsCard}
           {cardHolder}
         </div>
       </MuiThemeProvider>

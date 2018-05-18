@@ -352,17 +352,23 @@ router.post('/Data', (request, response) => {
           'Content-Type': 'application/json',
       }
   };
+
   let promise = new Promise(
     (resolve, reject) => {
       var getTweetIds = http.request(options, (deRes) =>{
         deRes.setEncoding('utf8');
+
         deRes.on('data', (body) => {
           var DataEngineResponse = JSON.parse(body)
           for(var i = 0; i < DataEngineResponse.Tweets.length; i++){
             tweetGroup.push(DataEngineResponse.Tweets[i].TweetId)
           }
-          resolve(tweetGroup)
         })
+
+        deRes.on('end', () => {
+          resolve(tweetGroup)
+        });
+
         deRes.on('error', (err) => {
           console.log(err)
         })
@@ -372,20 +378,76 @@ router.post('/Data', (request, response) => {
     
   promise.then(
     (tweetGroup) =>{
-      console.log(tweetGroup)
+      console.log("tweetGroup: " + tweetGroup)
       // put the id_str in this parameratized url RESTful get. LOL DOPE. 
       Twitter.get('statuses/show/' + tweetGroup[1], function(error, tweets, tweetResponse) {
           if (error) {
               console.log(error);
           }
-            
-          response.status(200)
-          response.json(tweets)
-          console.log(tweets)
+          var analyticsResponse;
+          respondWithTwitterData(tweetGroup).then((responseData) => {
+            analyticsResponse = responseData;
+            response.status(200)
+            response.json(responseData);
+            console.log(responseData);
+          }).catch((err) => {
+            console.log(err);
+          });
       });
-    })
-
+    })    
 })
+
+respondWithTwitterData = (tweetGroup) => {
+  var responseTweetAnalytics = [];
+
+  return new Promise(
+    (resolve, reject) => {
+
+      
+    var analyze = new Promise(
+      (resolve2, reject) => {
+        var count = 0;
+        tweetGroup.forEach((tweetId) => {
+          var twitterPath = 'statuses/show/' + tweetId;
+              Twitter.get(twitterPath, (error, tweets, tweetResponse) => {
+                if (error){
+                  count ++;
+                  return;
+                } 
+                else {
+                  responseTweetAnalytics.push(twitterStatusParser(tweets));
+                  if (count == tweetGroup.length - 1) resolve2(responseTweetAnalytics);
+                  count++;
+                }
+              });
+          });
+      });
+
+      analyze.then(
+        (resolvedObject) => {
+          resolve(resolvedObject);
+        }); 
+    });
+
+};
+
+getSingleTweetAnalytics = (id) => {
+  var twitterPath = 'statuses/show/' + id;
+  Twitter.get(twitterPath, (error, tweets, tweetResponse) => {
+    if (error) return "Error getting single tweet analytics: " + id;
+    return twitterStatusParser(tweets);
+  });
+};
+
+twitterStatusParser = (tweetJson) => {
+  var parsedTweet = {
+    favorite_count: tweetJson.favorite_count,
+    retweet_count: tweetJson.retweet_count,
+    created_at: tweetJson.created_at,
+    text: tweetJson.text
+  }
+  return parsedTweet;
+};
 
 // https challange cert 
 router.get('/.well-known/:key', (req, res) => {
