@@ -133,7 +133,9 @@ const styles = {
     left: 60
   }, 
   graph: {
-    height: 50,
+    height: 300,
+    top: 'auto', 
+    bottom: 'auto',
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: 5,

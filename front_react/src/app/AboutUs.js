@@ -164,63 +164,8 @@ class AboutUs extends React.Component{
                         </CardMedia>
                         <CardTitle style={style.CardStyle} title="#realMikeFacts" subtitle="Who am I? Why did I create it?" />
                         <CardText>
-                        I am an avid surfer, musician, and photographer.  I work professionally as a software engineer in 
-                        the broadcast media industry.
-                        I grew up in Long Island, New York. 
-                        </CardText>
-                        <CardText>
-                        When I was about 14 I fell in love with music, specifically the guitar.  I had a couple of different bands and met 
-                        many musicians, some 'Genius' musicians along the way. 
-                        I love all the greats and I have plenty of that oozy bluesy soul. Influences: Jimi Hendrix, Led Zeppelin, 
-                        Frank Zappa, Eric Clapton, Tony Iommi, Alan Holdsworth, Jeff Beck, Alex Lifeson.. to name a few.
-                        </CardText>
-                        <CardText>
-                        I wanted to learn how these fantastic electrical circuits 
-                        could make such loud, booming and completely beautiful sounds!  So, I had to learn electronics.  
-                        I started modifying amplifiers and guitars to emulate the sounds I heard on my favorite albums. 
-                        Example: Edgar Winter & Rick Derringer Live in Japan.  (My b.c rich bich guitar)
-                        </CardText>
-                        <CardText>
-                        I ended up going to school for Electrical and Computer Engineering. I loved digital design, something
-                        about my brain handles literal logic really well. I also wrote lots of code, and had to take a bunch 
-                        of stupid classes like public speaking. #fdale. 
-                        </CardText>
-                        <CardText>
-                        I ended up in a really 'funny' place when I got hired full time as a Team Lead in a non-engineering department. 
-                        Where was the engineering?  I had to look for it.
-                        Someone from the engineering department actually noticed I was making some nifty Node.js apps, and 
-                        some mobile apps.
-                        He ended up asking me if I had ever used
-                        React.js or React-Native.
-                        </CardText>
-                        <CardText>
-                        realMikeFacts started out as a test to see if I could teach myself React. Just hopped into that crazy fun 
-                        JavaScript community.  
-                        </CardText>
-                        <CardText>
-                        Mike works at starbucks... But at night he is a vigilante black hat hacker.  Things got interesting
-                        when he began egging me on to 'up the security' and started pointing out 'vulns' as he calls them.
-                        This made me want to be a better developer.  It became something fun to talk about. Which lead me to be
-                        the life of every party. 😎
-                        </CardText>
-                        <CardText>
-                        So, about the app!  The front end is all Reactjs.  I used Google's 'Material Design' libraries in my components.
-                        Using JSX is really quick and easy.  For state management I'm using React router.  The back end is really interesting.
-                        I used the Express Node.js framework for a server applicaiton. I created a realMikeFacts twitter application so that 
-                        the realMikeFacts back end can use the Twitter API.  
-                         I also wrote a realMikeFacts REST API for this server application 
-                        but the fun part was learning how to write it asynchroneously.  So, the React front end is using 
-                        The realMikeFacts back end REST API to manage multiple JSON databases while sending tweets through
-                        the UI. 
-                        </CardText>
-                        <CardText>
-                        So, I will continue to slowly improve the performance, security and scalability of the applicaiton.  But
-                        Not because I like ripping on Mike, or because I like twitter.  It's genuinely because 
-                        coding and learning to code has been, and will always be one of the many things I love to do!
-                        This is really just the aftermath of someone asking me a simple question about something I'm passionate about.
-                        </CardText>
-                        <CardText>
-                        PS: Thanks for making me finally create this Felicia! 😉
+                        So, I will continue to slowly improve the performance, security and scalability of the applicaiton.
+                        Better bio coming soon...
                         </CardText>
                         <CardActions>
                             {/*<FlatButton label="Action1" />

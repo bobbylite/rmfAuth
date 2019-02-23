@@ -7,7 +7,7 @@ const config = {
     entry: {
         main: [
             // only- means to only hot reload for successful updates
-            'webpack-dev-server/client?http://' + require("ip").address() + ':8081',
+            'webpack-dev-server/client?https://' + '96.232.106.251' + ':8081',
             'webpack/hot/only-dev-server',
             './src/app/app.js',
         ],
@@ -27,6 +27,7 @@ const config = {
         host: '0.0.0.0', // Change to '0.0.0.0' for external facing server
         disableHostCheck: true,
         historyApiFallback: true,
+        https: false
     },
     devtool: 'eval',
     output: {

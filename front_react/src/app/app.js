@@ -7,6 +7,10 @@ import fingerScanner from './fingerScanner'; // Fun fingerPrint scanner idea!
 import AboutUs from './AboutUs';
 import Analytics from "./analytics";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-86276017-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941

@@ -9,10 +9,15 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "debug": "~2.6.3",
     "express": "^4.15.3",
+    "express-jwt": "^5.3.1",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.3.0",
     "morgan": "~1.8.1",
+    "node-dataengine-client": "^0.3.71",
+    "nvm": "0.0.4",
     "serve-favicon": "~2.4.2",
     "twitter": "^1.7.1"
   }
